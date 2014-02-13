@@ -1,0 +1,4 @@
+build
+*.sh
+dist
+falcon.egg-info
