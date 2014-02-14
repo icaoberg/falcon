@@ -35,22 +35,22 @@ def query( candidates, good_set, alpha=-5, normalization='zscore' ):
   '''
 
   #standard deviation of features in the dataset
-  #std = numpy.std(numpy.array( goodSet[2]) )
+  #std = numpy.std(numpy.array( good_set[2]) )
 
   #normalize the feature vectors
-  [candidates, goodSet] = feature_normalization( candidates, good_set, normalization )
+  [candidates, good_set] = feature_normalization( candidates, good_set, normalization )
 
   ratings = []
   iids = []
   for candidate in candidates:
-    iids.append( candidate[0] )
-    ratings.append( distance( alpha, candidate, goodSet ) )
+  	iids.append( candidate[0] )
+  	ratings.append( distance( alpha, candidate, good_set ) )
 
   tups = zip(iids, ratings) # zip them as tuples
 
   result = sorted(tups, key=itemgetter(1))
   # note that this is sorting the tuples by the second element of the tuple
-  # if you want to sort by the first element, then you should use ¡®itemgetter(0)¡¯
+  # if you want to sort by the first element, then you should use itemgetter(0)
   sorted_iids = []
   sorted_scores = []
   for itm in result:
@@ -67,8 +67,8 @@ def distance( alpha, candidate, good_set ):
   :type alpha: double
   :param candidate: a feature vector 
   :type candidates: list
-  :param goodSet: a list of feature vectors
-  :type goodSet: array
+  :param good_set: a list of feature vectors
+  :type good_set: array
   :rtype: distance
   '''
 
@@ -83,9 +83,9 @@ def distance( alpha, candidate, good_set ):
   weights = numpy.float64(0)
 
   for index in range( counts ):
-    weight = numpy.float64(goodSet[index][1])
+    weight = numpy.float64(good_set[index][1])
     weights = weights + weight
-    d = norm( candidate[2], goodSet[index][2] )
+    d = norm( candidate[2], good_set[index][2] )
     score = weight * numpy.power(d, numpy.float64(alpha)) 
     total = total + score
 
@@ -138,9 +138,9 @@ def feature_normalization( trainset, testset, normalization ):
     trainset_feat = []
 
     for itm in trainset:
-    trainset_id.append(itm[0])
-    trainset_wt.append(itm[1])
-    trainset_feat.append(itm[2])
+    	trainset_id.append(itm[0])
+    	trainset_wt.append(itm[1])
+    	trainset_feat.append(itm[2])
 
     trainset_feat = numpy.array(trainset_feat)
     min_col = trainset_feat.min(axis=0) + 1e-10
@@ -177,9 +177,9 @@ def feature_normalization( trainset, testset, normalization ):
     for itm in trainset:
       trainset_id.append(itm[0])
       trainset_wt.append(itm[1])
-      trainset_feat.append(itm[2])
+      trainset_feat.append(itm[2:])
 
-    trainset_feat = numpy.array(trainset_feat)
+    trainset_feat = numpy.array( trainset_feat )
 
     mean_col = trainset_feat.mean(axis=0)
     std_col = trainset_feat.std(axis=0) + 1e-10
@@ -193,14 +193,14 @@ def feature_normalization( trainset, testset, normalization ):
     for itm in testset:
       testset_id.append(itm[0])
       testset_wt.append(itm[1])
-      testset_feat.append(itm[2])
+      testset_feat.append(itm[2:])
 
     testset_feat = numpy.array(testset_feat)
     testset_normfeat = (testset_feat-mean_col)/numpy.float64(std_col)
 
     new_trainset = []
     for i in range(len(trainset)):
-      new_trainset.append([trainsetset_id[i], trainset_wt[i], trainset_normfeat[i]])
+      new_trainset.append([trainset_id[i], trainset_wt[i], trainset_normfeat[i]])
 
     new_testset = []
     for i in range(len(testset)):
