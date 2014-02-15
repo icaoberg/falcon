@@ -17,9 +17,17 @@
 
 import numpy
 import scipy
+import os
+import time
+
 from operator import itemgetter, attrgetter
 
-def query( candidates, good_set, alpha=-5, normalization='zscore' ):
+try:
+  import cPickle as pickle
+except Exception, e:
+  import pickle
+
+def query( good_set, candidates, alpha=-5, normalization='zscore', debug=False ):
   '''
   Returns a ranked list
 
@@ -38,15 +46,43 @@ def query( candidates, good_set, alpha=-5, normalization='zscore' ):
   #std = numpy.std(numpy.array( good_set[2]) )
 
   #normalize the feature vectors
-  [candidates, good_set] = feature_normalization( candidates, good_set, normalization )
+  if debug:
+    log_filename = './falcon.log'
+    if os.path.isfile( log_filename ):
+      file = open( log_filename, 'a' )
+    else:
+      file = open( log_filename, 'w' )
+    
+    file.write( "#BEGIN\n")
+    file.write( "Current date & time " + time.strftime("%c") + "\n" )
+   
+    workspace = {}
+    workspace['candidates'] = candidates
+    workspace['good_set'] = good_set
+
+  [candidates, good_set] = feature_normalization( candidates, good_set, normalization, debug=debug )
+
+  if debug:
+    workspace['normalized_candidates'] = candidates
+    workspace['normalized_good_set'] = good_set
 
   ratings = []
   iids = []
-  for candidate in candidates:
-  	iids.append( candidate[0] )
-  	ratings.append( distance( alpha, candidate, good_set ) )
+  candidate_distance = []
 
-  tups = zip(iids, ratings) # zip them as tuples
+  for candidate in candidates:
+    iids.append( candidate[0] )
+    candidate_distance = distance( alpha, candidate, good_set, debug=debug )
+    ratings.append( candidate_distance )
+    if debug:
+      print "Distance from candidate:" + candidate[0] + " to good set is " + str(candidate_distance)
+
+  if debug:
+    workspace['iids'] = iids
+    workspace['ratings'] = ratings
+    pickle.dump( workspace, open( "workspace.pkl", "wb" ) )
+  
+  tups = zip( iids, ratings ) # zip them as tuples
 
   result = sorted(tups, key=itemgetter(1))
   # note that this is sorting the tuples by the second element of the tuple
@@ -57,9 +93,13 @@ def query( candidates, good_set, alpha=-5, normalization='zscore' ):
     sorted_iids.append(itm[0])
     sorted_scores.append(itm[1])
 
+  if debug:
+    file.write( '#END\n' )
+    file.close()
+
   return [sorted_iids, sorted_scores]
 
-def distance( alpha, candidate, good_set ):
+def distance( alpha, candidate, good_set, debug=False ):
   '''
   Calculates the distance between a candidate and every member of the good set
 
@@ -71,6 +111,15 @@ def distance( alpha, candidate, good_set ):
   :type good_set: array
   :rtype: distance
   '''
+  if debug:
+    log_filename = './distance.log'
+    if os.path.isfile( log_filename ):
+      file = open( log_filename, 'a' )
+    else:
+      file = open( log_filename, 'w' )
+
+    file.write( "#BEGIN\n")
+    file.write( "alpha set to : " + str(alpha) + "\n" )
 
   very_big = float(numpy.finfo( numpy.float32 ).max)/2;
   flag_zero = False
@@ -101,6 +150,10 @@ def distance( alpha, candidate, good_set ):
       if numpy.float64(candidate[1])<0:
         total = very_big
 
+  if debug:
+    file.write( str(total) )
+    file.write( "#BEGIN\n")
+    file.close()
   return total 
 
 def norm( A, B, alpha=2 ):
@@ -119,7 +172,7 @@ def norm( A, B, alpha=2 ):
   B = numpy.float64( numpy.array( B ) )
   return numpy.float64(numpy.power(numpy.sum(numpy.abs((A-B))**alpha),numpy.float64(1.0/alpha)))
 
-def feature_normalization( trainset, testset, normalization ):
+def feature_normalization( trainset, testset, normalization, debug=False ):
   '''
   Feature normalization.
 
@@ -131,6 +184,16 @@ def feature_normalization( trainset, testset, normalization ):
   :rtype: string
   :rtype: normalized train and test sets
   '''
+
+  if debug:
+    print "Normalizing features in training and test set"
+    print "Normalization option:" + normalization
+    print "Number of features found in train set:" + str(len(trainset[2])
+    print "Number of records found in train set:" + str(len(trainset))
+    print numpy.shape( testset )
+    print "Number of features found in test set:" + str(len(testset[2])
+    print "Number of records found in test set:" + str(len(testset))
+    temp = None
 
   if normalization == 'standard':
     trainset_id = []
@@ -177,7 +240,7 @@ def feature_normalization( trainset, testset, normalization ):
     for itm in trainset:
       trainset_id.append(itm[0])
       trainset_wt.append(itm[1])
-      trainset_feat.append(itm[2:])
+      trainset_feat.append(itm[2])
 
     trainset_feat = numpy.array( trainset_feat )
 
@@ -193,7 +256,7 @@ def feature_normalization( trainset, testset, normalization ):
     for itm in testset:
       testset_id.append(itm[0])
       testset_wt.append(itm[1])
-      testset_feat.append(itm[2:])
+      testset_feat.append(itm[2])
 
     testset_feat = numpy.array(testset_feat)
     testset_normfeat = (testset_feat-mean_col)/numpy.float64(std_col)
@@ -207,3 +270,24 @@ def feature_normalization( trainset, testset, normalization ):
       new_testset.append([testset_id[i], testset_wt[i], testset_normfeat[i]])
 
     return new_trainset, new_testset
+
+  def counter( filename, word ):
+    '''
+    Helper function that counts the occurences of a word in a file
+
+    '''
+
+    count = 0
+    try:
+      file  = open('file', 'r')
+    except:
+      print "Unable to open file"
+      return count
+    
+    for line in file:
+      if word in line:
+        total += 1
+
+    file.close()
+    return count
+

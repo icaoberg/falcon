@@ -27,19 +27,19 @@ names = data_frame.ix[:,'label'].values
 features = data_frame.ix[:,1:].values
 
 print "Using image:" + names[0] + " as query image"
-candidate = []
-candidate.append( names[0] )
-candidate.extend( [0] )
-candidate.extend( features[0,:].tolist() )
-candidate = [ candidate ]
+query_list = []
+query_list.append( names[0] )
+query_list.extend( [0] )
+query_list.extend( features[0,:].tolist() )
+query_list = [ query_list ]
 
 print "Making good set using all images in dataset"
-good_set = []
+candidates_list = []
 for index in range( len( features ) ):
-	good_element = []
-	good_element.append( names[index] )
-	good_element.extend( [0] )
-	good_element.extend( features[index,:] )
-	good_set.append( good_element )
+	candidate = []
+	candidate.append( names[index] )
+	candidate.extend( [0] )
+	candidate.extend( features[index,:] )
+	candidates_list.append( candidate )
 
-[iids, scores] = falcon.search.query( candidate, good_set )
+[iids, scores] = falcon.search.query( query_list, candidates_list, normalization='standard', debug=True )
