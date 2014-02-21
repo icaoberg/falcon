@@ -46,4 +46,24 @@ deactivate
 
 Documentation
 -------------
-To generate documentation
+To generate documentation use the following commands.
+
+To generate html
+```
+cd docs
+make html
+```
+
+To generate PDF document
+```
+cd docs
+make latexpdf
+```
+
+To generate epub document
+```
+cd docs
+make epub
+```
+
+Documentation was written using sphinx.
