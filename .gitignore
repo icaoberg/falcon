@@ -1,4 +1,7 @@
+bin
 build
 *.sh
 dist
 falcon.egg-info
+lib
+include
