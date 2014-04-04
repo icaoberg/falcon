@@ -185,16 +185,6 @@ def feature_normalization( trainset, testset, normalization, debug=False ):
   :rtype: normalized train and test sets
   '''
 
-  if debug:
-    print "Normalizing features in training and test set"
-    print "Normalization option:" + normalization
-    print "Number of features found in train set:" + str(len(trainset[2])
-    print "Number of records found in train set:" + str(len(trainset))
-    print numpy.shape( testset )
-    print "Number of features found in test set:" + str(len(testset[2])
-    print "Number of records found in test set:" + str(len(testset))
-    temp = None
-
   if normalization == 'standard':
     trainset_id = []
     trainset_wt = []
