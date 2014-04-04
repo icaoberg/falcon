@@ -6,9 +6,7 @@ falcon is a python implementation of the eedback Adaptive Loop for Content-Based
  
 FALCON is, as described in the article abstract, "a novel method that is designed to handle disjunctive queries within metric spaces. The user provides weights for positive examples; our system 'learns' the implied concept and returns similar objects."
 
-Development branch status
--------------------------
-[![Build Status](https://travis-ci.org/icaoberg/falcon.svg?branch=dev)](https://travis-ci.org/icaoberg/falcon)
+* Development branch status: [![Build Status](https://travis-ci.org/icaoberg/falcon.svg?branch=dev)](https://travis-ci.org/icaoberg/falcon)
 
 Pre-Requisites
 --------------
