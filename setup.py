@@ -33,10 +33,7 @@ setup(name = 'falcon',
       author_email = 'icaoberg@alumni.cmu.edu',
       install_requires=[
       	'numpy',
-      	'scipy',
-      	'numexpr',
-      	'cython',
-      	'tables'],
+      	'scipy']
       url = 'git@github.com:icaoberg/falcon.git',
       classifiers=[
       	'Programming Language :: Python', 
