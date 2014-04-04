@@ -28,7 +28,7 @@ setup(name = 'falcon',
       version = __version__,
       description = ('FALCON: '
       	'Feedback Adaptive Loop for Content-Based Retrieval'),
-      long_description=read('README'),
+      long_description=read('README.rst'),
       author = 'Ivan Cao-Berg',
       author_email = 'icaoberg@alumni.cmu.edu',
       install_requires=[
