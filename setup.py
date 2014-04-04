@@ -19,7 +19,7 @@ import os
 from setuptools import setup
 
 #load the current version number of the package
-exec(compile(open('VERSION').read(),'VERSION', 'exec'))
+exec(compile(open('VERSION').read(), 'VERSION', 'exec'))
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -38,5 +38,6 @@ setup(name = 'falcon',
       classifiers=[
       	'Programming Language :: Python', 
       	'Intended Audience :: Science/Research',
-      	'Intended Audience :: Developers'],
+      	'Intended Audience :: Developers',
+            'Development Status :: 2 - Pre-Alpha'],
       py_modules=['falcon.search'])
