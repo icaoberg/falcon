@@ -23,11 +23,12 @@ import time
 from operator import itemgetter, attrgetter
 
 try:
-    import cPickle as pickle
+        import cPickle as pickle
 except Exception, e:
-    import pickle
+        import pickle
 
-def query( good_set, candidates, alpha=-5, normalization='zscore', debug=False ):
+def query( good_set, candidates, alpha=-5, normalization='zscore', 
+           debug=False ):
     '''
     Returns a ranked list
 
