@@ -24,7 +24,7 @@ query_wines = []
 query_wines.append(['wine0', 1, data[0]])
 
 #metrics
-metrics = ['euclidean','mahalanobis','cityblock','hamming']
+metrics = ['euclidean','cityblock','hamming']
 
 remove(filename)
 
@@ -36,16 +36,15 @@ for datum in data:
 
 data = {}
 for metric in metrics:
-	[iids, scores] = falcon.search.query( query_wines, dataset, metric='cityblock', normalization='standard', debug=True )
+	[iids, scores] = falcon.search.query( query_wines, dataset, metric=metric, normalization='standard', debug=True )
 	data[metric] = iids
 
 #icaoberg: just in case people do not have the tabulate package
 from tabulate import tabulate
 table = []
 for index in range(20):
-	table.append([index, data['euclidean'][index], data['mahalanobis'][index], 
-		data['cityblock'][index], data['hamming'][index]])
+	table.append([index, data['euclidean'][index], data['cityblock'][index], data['hamming'][index]])
 
-print tabulate(table, headers=["Ranking","Euclidean", "Mahalanobis", "City Block", "Hamming"])
+print tabulate(table, headers=["Ranking","Euclidean", "City Block", "Hamming"])
 exit(0)
 
