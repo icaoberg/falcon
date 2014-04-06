@@ -1,6 +1,6 @@
-#this example will download the iris dataset from the machine learning repository at uci
-#located in http://archive.ics.uci.edu/ml/datasets/Iris
-#and will attempt to query using one image against the whole dataset
+#icaoberg: this example generate a list of random vectors and performs the search on them
+#because i included the query image in the dataset, the take home lesson from this example
+#is that the top result should always be the query image
 
 from sys import exit
 
@@ -43,6 +43,7 @@ for i in range(number_of_synthetic_vectors_in_dataset):
 t = time() - t
 print "Elapsed time: " + str(t) + " seconds\n"
 
+#icaoberg: the meat and potatoes of this package
 t = time()
 print "Querying with one images"
 [iids, scores] = falcon.search.query( query_set, dataset, normalization='standard', debug=True )
@@ -57,6 +58,7 @@ print "Top Ten Results!"
 iids = iids[0:9]
 scores = scores[0:9]
 
+#icaoberg: just in case people do not have the tabulate package
 try:
 	from tabulate import tabulate
 	rank = 0
@@ -73,3 +75,9 @@ except:
 	for iid, score in zip(iids,scores):
 		print str(rank) + "\t" + str(iid) + "\t\t" + str(score)
 		rank = rank + 1
+
+#icaoberg: this line is neccesary so i can test this example in travis/jenkins
+if iids[0] == 'img':
+	exit(0)
+else:
+	exit("\nTop match was not query image. Something went wrong with this example")
