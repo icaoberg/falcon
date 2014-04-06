@@ -32,8 +32,11 @@ before_install:
 
 script:
     - python setup.py install
-    - python examples/random.py
+    - python examples/random_feature_vectors.py
+    - rm -f *.pkl
     - python examples/number_of_feature_vectors_performance-euclidean_distance.py
+    - rm -f *.pkl
+    - rm -f *.png
 
 # command to run tests
 # script: nosetests

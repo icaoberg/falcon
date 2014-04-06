@@ -26,6 +26,8 @@ from math import floor
 #http://stackoverflow.com/questions/3160699/python-progress-bar
 toolbar_width = 80
 
+filename = 'number_of_feature_vectors_performance-euclidean_distance'
+
 # setup toolbar
 stdout.write("[%s]" % (" " * toolbar_width))
 stdout.flush()
@@ -33,7 +35,7 @@ stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
 
 results = [];
 print "Generating and querying on synthetic datasets, please wait..."
-for number_of_synthetic_vectors_in_dataset in range(100,10E3,100):
+for number_of_synthetic_vectors_in_dataset in range(100,10E2,100):
 	number_of_synthetic_features = 500
 
 	query_image = [ 'img', 1 ]
@@ -69,25 +71,27 @@ except:
 	print "Oh no! I could not import tabulate. Do not worry I will save the results in a pickle file"
 
 import pickle
-output_file = open( 'number_of_features_performance-euclidean_distance.pkl', 'w')
+output_file = open( filename + '.pkl', 'w')
 pickle.dump( results, output_file )
 output_file.close()
 
 print "\nThere is a clear trend that is dependent on the number of feature vectors. You know what? Why don't we try making a pretty plot as well"
 
 try:
-	import matplotlib.pyplot as plot
+	import matplotlib.pyplot as plt
 	polynomial = polyfit([row[0] for row in results],[row[1] for row in results], 1)
-	plot.plot( [row[0] for row in results], [row[1] for row in results], 'bo' )
-	plot.plot( [row[0] for row in results], polyval( polynomial, [row[0] for row in results]), 'r-' )
-	plot.ylabel('Time (seconds)')
-	plot.xlabel('Number of feature vectors')
-	plot.title('FALCON - Number of features Performance Test')
-	plot.legend(["Euclidean distance"])
-	plot.grid(True)
-	plot.savefig( 'number_of_features_performance-euclidean_distance.png' )
+	plt.plot( [row[0] for row in results], [row[1] for row in results], 'bo' )
+	plt.plot( [row[0] for row in results], polyval( polynomial, [row[0] for row in results]), 'r-' )
+	plt.ylabel('Time (seconds)')
+	plt.xlabel('Number of feature vectors')
+	plt.title('FALCON - Number of features Performance Test')
+	plt.legend(["Euclidean distance"])
+	plt.grid(True)
+	plt.savefig( filename + '.png' )
 except:
  	print "\nOh no! I could not import matplotlib. I cannot make a pretty plot :("
 
-if not path.isfile( 'number_of_features_performance-euclidean_distance.png' ) and not path.isfile( 'number_of_features_performance-euclidean_distance.pkl' ):
+if not path.isfile( filename + '.png' ) and not path.isfile( filename + '.pkl' ):
  	exit("\nCould not find pickle file nor pretty plot")
+else:
+	exit(0)
