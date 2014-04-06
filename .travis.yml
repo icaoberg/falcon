@@ -9,6 +9,7 @@ virtualenv:
 branches:
   only:
     - dev
+    - master
 
 before_install:
     - echo "before_install"
@@ -29,8 +30,13 @@ before_install:
     - sudo apt-get install -qq libpng12-dev libtiff4-dev libwebp-dev
     - sudo apt-get install -qq python-scipy python-imaging python-matplotlib
 
-#because i am not currently not running tests i need to override the script key
-script: true
+script:
+    - python setup.py install
+    - python examples/random_feature_vectors.py
+    - rm -f *.pkl
+    - python examples/number_of_feature_vectors_performance-euclidean_distance.py
+    - rm -f *.pkl
+    - rm -f *.png
 
 # command to run tests
 # script: nosetests

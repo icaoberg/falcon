@@ -16,7 +16,7 @@
 # 02110-1301, USA.
 
 import numpy
-import scipy
+import scipy.spatial.distance as distances
 
 from operator import itemgetter
 
@@ -39,9 +39,11 @@ def query(good_set, candidates, alpha=-5, normalization='zscore', debug=False):
     #std = numpy.std(numpy.array( good_set[2]) )
 
     #normalize the feature vectors
-    workspace = {}
-    workspace['candidates'] = candidates
-    workspace['good_set'] = good_set
+    if debug:
+        workspace = {}
+        workspace['candidates'] = candidates
+        workspace['good_set'] = good_set
+
     [candidates, good_set] = feature_normalization(candidates, good_set,
         normalization, debug=debug)
 
@@ -55,7 +57,8 @@ def query(good_set, candidates, alpha=-5, normalization='zscore', debug=False):
 
     for candidate in candidates:
         iids.append(candidate[0])
-        candidate_distance = distance(alpha, candidate, good_set, debug=debug)
+        candidate_distance = big_distance(alpha, candidate, 
+            good_set, debug=debug)
         ratings.append(candidate_distance)
 
     tups = zip(iids, ratings) # zip them as tuples
@@ -73,7 +76,8 @@ def query(good_set, candidates, alpha=-5, normalization='zscore', debug=False):
 
     return [sorted_iids, sorted_scores]
 
-def distance(alpha, candidate, good_set, debug=False):
+def big_distance(alpha, candidate, good_set, weighted=True, 
+        metric='euclidean', debug=True):
     '''
     Calculates the distance between a candidate and every member of the good set
 
@@ -83,7 +87,9 @@ def distance(alpha, candidate, good_set, debug=False):
     :type candidates:list
     :param good_set:a list of feature vectors
     :type good_set:array
-    :rtype: distance
+    :param weight:weight
+    :type weight:double
+    :rtype: total_distance
     '''
 
     very_big = float(numpy.finfo(numpy.float32).max)/2
@@ -96,42 +102,60 @@ def distance(alpha, candidate, good_set, debug=False):
     weights = numpy.float64(0)
 
     for index in range(counts):
-        weight = numpy.float64(good_set[index][1])
+        if weighted:
+            weight = numpy.float64(good_set[index][1])
+        else:
+            weight = 1
+
         weights = weights+weight
-        temporary_distance = norm(candidate[2], good_set[index][2])
-        score = weight*numpy.power(temporary_distance, numpy.float64(alpha))
+        score = distance(candidate[2], 
+            good_set[index][2], alpha=alpha, metric=metric )
+
+        if alpha < 0 and score == 0:
+            total_distance = 0
+            return total_distance
+
+        score = weight*numpy.power(score, numpy.float64(alpha))
         total = total + score
 
-    if candidate[1] < 0:
-        total = numpy.float64(0)
-    else:
-        total = numpy.float64(total)/numpy.float64(weights)
-        if total != 0:
-            total = numpy.float64(numpy.power(total, numpy.float64(alpha)))
-        elif numpy.float64(candidate[1]) > 0:
-            total = 0
-        else:
-            if numpy.float64(candidate[1]) < 0:
-                total = very_big
+    total_distance = total/weights
+    total_distance = total_distance**(1.0/1.0*alpha)
+ 
+    return total_distance
 
-    return total
-
-def norm(vector1, vector2, alpha=2):
+def distance(vector1, vector2, alpha=2, metric='euclidean' ):
     '''
-    Calculates the norm between vectors A and B
+    Helper function that calculates the alpha
 
     :param vector1:a vector
     :type vector1:list of doubles
     :param vector2:a vector
     :type vector2:list of doubles
+    :param metric: euclidean, mahalanobis, seuclidean, cityblock
+    :type metric:string
     :rtype: norm between vectors A and B
     '''
 
     alpha = numpy.float64(1.0*alpha)
     vector1 = numpy.float64(numpy.array(vector1))
     vector2 = numpy.float64(numpy.array(vector2))
-    vector_norm = numpy.float64(numpy.power(numpy.sum(numpy.abs((vector1-
-        vector2))**alpha), numpy.float64(1.0/alpha)))
+
+    if metric == 'euclidean':
+        vector_norm = distances.euclidean( vector1, vector2 )
+    elif metric == 'mahalanobis':
+        vi = numpy.linalg.inv( numpy.cov( 
+            numpy.concatenate((vector1, vector2)).T))
+        vector_norm = distances.mahalanobis( vector1, vector2, vi )
+    elif metric == 'seuclidean':
+        vector_norm = distances.seuclidean( vector1, vector2 )
+    elif metric == 'cityblock':
+        vector_norm = distances.cityblock( vector1, vector2 )
+    elif metric == 'hamming':
+        vector_norm = distances.hamming( vector1, vector2 )
+    else:
+        print "Unknown metric"
+        return None
+
     return vector_norm
 
 def feature_normalization(trainset, testset, normalization, debug=False):
@@ -246,4 +270,3 @@ def counter(filename, word):
 
     textfile.close()
     return count
-
