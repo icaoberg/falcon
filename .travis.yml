@@ -29,6 +29,7 @@ before_install:
     - sudo apt-get install -qq libfreeimage3
     - sudo apt-get install -qq libpng12-dev libtiff4-dev libwebp-dev
     - sudo apt-get install -qq python-scipy python-imaging python-matplotlib
+    - pip install tabulate
 
 script:
     - python setup.py install
@@ -37,6 +38,7 @@ script:
     - python examples/number_of_feature_vectors_performance-euclidean_distance.py
     - rm -f *.pkl
     - rm -f *.png
+    - python examples/iris.py
 
 # command to run tests
 # script: nosetests
