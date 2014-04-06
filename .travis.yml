@@ -40,6 +40,7 @@ script:
     - rm -f *.png
     - python examples/iris.py
     - python examples/wine.py
+    - python examples/metrics.py
 
 # command to run tests
 # script: nosetests
