@@ -6,7 +6,7 @@ from time import time
 from sys import exit
 
 print '''
-This example uses the yeast dataset from
+This example uses the iris dataset from
 
 Machine Learning Repository
 Center for Machine Learning and Intelligent Systems
