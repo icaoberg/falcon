@@ -39,6 +39,7 @@ script:
     - rm -f *.pkl
     - rm -f *.png
     - python examples/iris.py
+    - python examples/wine.py
 
 # command to run tests
 # script: nosetests
