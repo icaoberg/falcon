@@ -41,6 +41,7 @@ script:
     - python examples/iris.py
     - python examples/wine.py
     - python examples/metrics.py
+    - python examples/alphas.py
 
 # command to run tests
 # script: nosetests
