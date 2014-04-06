@@ -45,7 +45,7 @@ print "Elapsed time: " + str(t) + " seconds\n"
 
 #icaoberg: the meat and potatoes of this package
 t = time()
-print "Querying with one images"
+print "Querying with one image"
 [iids, scores] = falcon.search.query( query_set, dataset, normalization='standard', debug=True )
 t = time() - t
 print "Elapsed time: " + str(t) + " seconds\n"

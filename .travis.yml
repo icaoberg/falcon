@@ -9,6 +9,7 @@ virtualenv:
 branches:
   only:
     - dev
+    - master
 
 before_install:
     - echo "before_install"
@@ -32,7 +33,7 @@ before_install:
 script:
     - python setup.py install
     - python examples/random.py
-    - python examples/number_of_features_performance-euclidean_distance.py
+    - python examples/number_of_feature_vectors_performance-euclidean_distance.py
 
 # command to run tests
 # script: nosetests
