@@ -37,6 +37,7 @@ script:
     - python examples/number_of_feature_vectors_performance-euclidean_distance.py
     - rm -f *.pkl
     - rm -f *.png
+    - python examples/iris.py
 
 # command to run tests
 # script: nosetests
