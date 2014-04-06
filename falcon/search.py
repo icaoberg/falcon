@@ -20,7 +20,7 @@ import scipy.spatial.distance as distances
 
 from operator import itemgetter
 
-def query(good_set, candidates, alpha=-5, normalization='zscore', debug=False):
+def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zscore', debug=False):
     '''
     Returns a ranked list
 
@@ -30,13 +30,12 @@ def query(good_set, candidates, alpha=-5, normalization='zscore', debug=False):
     :type candidates: double
     :param good_set: list of image ids from members of the good set
     :type good_set: list of longs
+    :param metric: a valid metric
+    :type metric: string
     :param normalization: normalization parameter. default value is 'zscore'
     :type normalization: string
     :rtype: list of ranked image
     '''
-
-    #standard deviation of features in the dataset
-    #std = numpy.std(numpy.array( good_set[2]) )
 
     #normalize the feature vectors
     if debug:
@@ -58,7 +57,7 @@ def query(good_set, candidates, alpha=-5, normalization='zscore', debug=False):
     for candidate in candidates:
         iids.append(candidate[0])
         candidate_distance = big_distance(alpha, candidate, 
-            good_set, debug=debug)
+            good_set, metric=metric, debug=debug)
         ratings.append(candidate_distance)
 
     tups = zip(iids, ratings) # zip them as tuples
