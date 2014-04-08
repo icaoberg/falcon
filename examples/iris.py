@@ -1,7 +1,7 @@
 import urllib
 from numpy import genfromtxt
 from os import remove
-import falcon
+import halcon
 from time import time
 from sys import exit
 
@@ -50,7 +50,7 @@ print dataset[0]
 print "\nSo I expect that if FALCON is working correctly, then iid1 should be the top hit!"
 
 t = time()
-[iids, scores] = falcon.search.query( query_image, dataset, normalization='standard', debug=True )
+[iids, scores] = halcon.search.query( query_image, dataset, normalization='standard', debug=True )
 t = time() - t
 print "Elapsed time: " + str(t) + " seconds\n"
 

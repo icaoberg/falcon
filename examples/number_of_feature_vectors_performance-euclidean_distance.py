@@ -15,9 +15,9 @@ except:
 	exit("Unable to import numpy. Exiting example.")
 
 try:
-	import falcon
+	import halcon
 except:
-	exit("Unable to import falcon. Exiting example.")
+	exit("Unable to import halcon. Exiting example.")
 
 from time import time
 from math import floor 
@@ -52,7 +52,7 @@ for number_of_synthetic_vectors_in_dataset in range(100,10E2,100):
 		dataset.append( datum )
 
 	t = time()
-	[iids, scores] = falcon.search.query( query_set, dataset, normalization='standard', debug=True )
+	[iids, scores] = halcon.search.query( query_set, dataset, normalization='standard', debug=True )
 	t = time() - t
 	results.append([ number_of_synthetic_vectors_in_dataset, t])
 

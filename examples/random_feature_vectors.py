@@ -10,9 +10,9 @@ except:
 	exit("Unable to import numpy. Exiting example.")
 
 try:
-	import falcon
+	import halcon
 except:
-	exit("Unable to import falcon. Exiting example.")
+	exit("Unable to import halcon. Exiting example.")
 
 from time import time
 from math import floor 
@@ -46,7 +46,7 @@ print "Elapsed time: " + str(t) + " seconds\n"
 #icaoberg: the meat and potatoes of this package
 t = time()
 print "Querying with one image"
-[iids, scores] = falcon.search.query( query_set, dataset, normalization='standard', debug=True )
+[iids, scores] = halcon.search.query( query_set, dataset, normalization='standard', debug=True )
 t = time() - t
 print "Elapsed time: " + str(t) + " seconds\n"
 

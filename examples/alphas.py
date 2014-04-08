@@ -1,7 +1,7 @@
 import urllib
 from numpy import genfromtxt
 from os import remove
-import falcon
+import halcon
 from time import time
 from sys import exit
 
@@ -37,7 +37,7 @@ for datum in data:
 data = {}
 for alpha in alphas:
 	#print "alpha:" + str(alpha)
-	[iids, scores] = falcon.search.query( query_wines, dataset, alpha=alpha, metric='euclidean', normalization='standard', debug=True )
+	[iids, scores] = halcon.search.query( query_wines, dataset, alpha=alpha, metric='euclidean', normalization='standard', debug=True )
 	data[alpha] = iids
 
 #icaoberg: just in case people do not have the tabulate package

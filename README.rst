@@ -1,8 +1,8 @@
-falcon
+halcon
 ======
 
-falcon is a python implementation of the eedback Adaptive Loop for
-Content-Based Retrieval (FALCON) algorith as described in
+halcon (falcon in Spanish) is a python implementation of the Feedback Adaptive Loop for
+Content-Based Retrieval (FALCON) algorithm as described in
 
 -  Leejay Wu, Christos Faloutsos, Katia P. Sycara, and Terry R. Payne.
    2000. FALCON: Feedback Adaptive Loop for Content-Based Retrieval. In
@@ -20,11 +20,11 @@ concept and returns similar objects."
 Master branch status
 ~~~~~~~~~~~~~~~~~~~~
 
-.. |Build Status| image:: https://travis-ci.org/icaoberg/falcon.svg?branch=master
+.. image:: https://travis-ci.org/icaoberg/falcon.svg?branch=master
    :target: https://travis-ci.org/icaoberg/falcon
 
 Pre-Requisites
---------------
+==============
 
 -  numpy
 -  scipy
@@ -36,10 +36,12 @@ To install the prerequisites in Ubuntu 12.04
     sudo apt-get install update
     sudo apt-get install python-numpy python-scipy
 
+
+
 Installation
 ============
 
-There are several ways to install falcon. The most common way is to
+There are several ways to install halcon. The most common way is to
 download the source code, unzip/untar the source code package and run
 the command
 
@@ -52,26 +54,27 @@ I do so, then should be able to install it by running the command
 
 ::
 
-    sudo pip install falcon
+    sudo pip install halcon
 
-**COMMENT**: falcon depends on `numpy <http://www.numpy.org>`__ and
+**COMMENT**: halcon depends on `numpy <http://www.numpy.org>`__ and
 `scipy <http://www.scipy.org>`__. Installing these packages in Windows
 and MacOSX is not a trivial task. For more information refer to the
 documentation.
 
-If you wish to install falcon in a virtual enviroment, then you can do
+
+If you wish to install halcon in a virtual enviroment, then you can do
 
 ::
 
-    virtualenv falcon
-    cd falcon
+    virtualenv halcon
+    cd halcon
     source ./bin/activate
     pip install numpy
     pip install scipy
     mkdir src
     cd src
-    git clone git@github.com:icaoberg/falcon.git
-    cd falcon
+    git clone git@github.com:icaoberg/halcon.git
+    cd halcon
     python setup.py install
     cd ../../
     deactivate
@@ -81,13 +84,13 @@ If you wish to install falcon in a virtual enviroment, then you can do
 your working system.
 
 Usage
------
+=====
 
 There is only one method that you need to know about
 
 ::
 
-    falcon.search.query(good_set, candidates, alpha=-5, 
+    halcon.search.query(good_set, candidates, alpha=-5, 
             metric='euclidean', normalization='zscore', debug=False)
 
 Here is a brief description of each of the input arguments
@@ -103,6 +106,8 @@ For example in ``wine.py``, I download a CSV file where the first
 ``[1,14.23,1.71,2.43,15.6,127,2.8,3.06,.28,2.29,5.64,1.04,3.92,1065]``
 
 and then I modify it like this
+
+
 
 ::
 
@@ -141,8 +146,12 @@ you might find useful, like `OpenCV <http://opencv.org/>`__,
 -  ``debug``. If debug flag is on, then it should print more information
    about the calculation as they happen.
 
+
+
+
+
 Examples
---------
+========
 
 For convenience and testing I included some examples. These examples
 download some datasets from the web and use them to trigger a query. The
@@ -159,21 +168,21 @@ results from the examples.
 
 In my humble opinion, the best way to run the examples is using
 `virtualenv <https://pypi.python.org/pypi/virtualenv>`__ -which is what
-I do for `travis <https://travis-ci.org/icaoberg/falcon>`__-. The next
+I do for `travis <https://travis-ci.org/icaoberg/halcon>`__-. The next
 commands assume you have virtualenv available.
 
 ::
 
-    virtualenv falcon --system-site-packages
-    . ./falcon/bin/activate
-    cd falcon
+    virtualenv halcon --system-site-packages
+    . ./halcon/bin/activate
+    cd halcon
     mkdir src
     cd src
     pip install numpy
     pip install scipy
     pip install tabulate
-    git clone https://github.com/icaoberg/falcon.git
-    cd falcon
+    git clone https://github.com/icaoberg/halcon.git
+    cd halcon
     python setup.py install
     cd ..
     python examples/iris.py
@@ -193,7 +202,7 @@ iris.py
     And I will use the rest of the feature vectors to find the most similar images
     Now notice that feature vector with iid1 has the same values iid0
     [1, 1, array([ 5.1,  3.5,  1.4,  0.2,  1. ])]
-    So I expect that if FALCON is working correctly, then iid1 should be the top hit!
+    So I expect that if halcon is working correctly, then iid1 should be the top hit!
     Elapsed time: 0.0221660137177 seconds
 
       Ranking    Identifier  Class                  Score
@@ -218,6 +227,7 @@ iris.py
            17            20  Iris-setosa      4.23544e-28
            18            25  Iris-setosa      1.67453e-27
            19             3  Iris-setosa      2.40919e-27
+
     Do the top results in the list above belong to the same class as the query image?
     If so, then SCORE! It seems to work.
 
@@ -268,7 +278,7 @@ metrics.py
     Machine Learning Repository
     Center for Machine Learning and Intelligent Systems
     http://archive.ics.uci.edu/ml/datasets/Wine
-    This example uses this dataset to compare the different metrics available in FALCON
+    This example uses this dataset to compare the different metrics available in halcon
 
       Ranking  Euclidean    City Block    Hamming
     ---------  -----------  ------------  ---------
@@ -293,7 +303,10 @@ metrics.py
            18  wine29       wine17        wine10
            19  wine8        wine8         wine11
 
-random\_feature\_vectors.py
+COMMENT: Hamming distance is meant for comparing strings so this example does not make a lot of sense since these features do not represent characters.
+
+
+random_feature_vectors.py
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -319,7 +332,8 @@ random\_feature\_vectors.py
             7  91            6.89901e+14
             8  79            7.17429e+14
 
-number\_of\_feature\_vectors\_performance-euclidean\_distance.py
+
+number_of_feature_vectors_performance-euclidean_distance.py
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -343,13 +357,14 @@ number\_of\_feature\_vectors\_performance-euclidean\_distance.py
     There is a clear trend that is dependent on the number of feature vectors.
     You know what? Why don't we try making a pretty plot as well
 
-.. figure:: https://raw.githubusercontent.com/icaoberg/falcon/master/images/number_of_feature_vectors_performance-euclidean_distance.png
-   :alt: 
+.. image:: https://raw.githubusercontent.com/icaoberg/falcon/master/images/number_of_feature_vectors_performance-euclidean_distance.png
 
 COMMENT: the examples are not seeded so you might get different results.
 
-number\_of\_features\_performance-euclidean\_distance.py
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+number_of_features_performance-euclidean_distance.py
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -383,13 +398,12 @@ number\_of\_features\_performance-euclidean\_distance.py
     There is a clear trend that is dependent on the number of feature vectors. 
     You know what? Why don't we try making a pretty plot as well
 
-.. figure:: https://raw.githubusercontent.com/icaoberg/falcon/dev/images/number_of_feature_performance-euclidean_distance.png
-   :alt: 
+.. image:: https://raw.githubusercontent.com/icaoberg/falcon/dev/images/number_of_feature_performance-euclidean_distance.png 
 
 COMMENT: the examples are not seeded so you might get different results.
 
 Documentation
--------------
+=============
 
 Documentation was written using `Sphinx <http://sphinx-doc.org/>`__. To
 generate documentation use the following commands.
@@ -415,15 +429,16 @@ To generate epub document
     cd docs
     make epub
 
+
 Bugs and Questions
-------------------
+==================
 
 To submit bugs about the source code visit
 
-https://github.com/icaoberg/falcon
+https://github.com/icaoberg/halcon
 
 To submit bugs about the documentation visit
 
-https://github.com/icaoberg/falcon-docs
+https://github.com/icaoberg/halcon-docs
 
 For any other inquiries visit those links as well.

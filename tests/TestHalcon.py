@@ -5,7 +5,7 @@ if sys.version_info < (2, 7):
 else:
     import unittest
 
-from falcon import search
+from halcon import search
 from numpy.random import rand
 
 class TestFalcon(unittest.TestCase):

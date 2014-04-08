@@ -44,5 +44,5 @@ script:
     - python examples/metrics.py
     - python examples/alphas.py
 
-# command to run tests
-# script: nosetests
+script: 
+    - nosetests
