@@ -60,6 +60,35 @@ deactivate
 
 **COMMENT**: The previous snippet assumes that you have [virtualenv](https://pypi.python.org/pypi/virtualenv) installed in your working system.
 
+Examples
+--------
+For convenience and testing I included some examples. These examples download some
+datasets from the web and use them to trigger a query. The only exception is the random feature vectors example. For example, to run the ```iris``` example simply run in terminal
+
+```
+python examples/iris.py
+```
+
+The examples have a dependency that the package does not, since I use [tabulate](https://pypi.python.org/pypi/tabulate) to pretty print the results from the examples.
+
+In my humble opinion, he best way to run the examples is using [virtualenv](https://pypi.python.org/pypi/virtualenv) -which is what I do for [travis](https://travis-ci.org/icaoberg/falcon). The next commands assume you have virtualenv available.
+
+```
+virtualenv falcon ---system-site-packages
+. ./falcon/bin/activate
+cd falcon
+mkdir src
+cd src
+pip install numpy
+pip install scipy
+pip install tabulate
+git clone https://github.com/icaoberg/falcon.git
+cd falcon
+python setup.py install
+cd ..
+python examples/iris.py
+```
+
 Documentation
 -------------
 Documentation was written using [Sphinx](http://sphinx-doc.org/).
@@ -82,3 +111,15 @@ To generate epub document
 cd docs
 make epub
 ```
+
+Bugs and Questions
+------------------
+To submit bugs about the source code visit
+
+https://github.com/icaoberg/falcon
+
+To submit bugs about the documentation visit
+
+https://github.com/icaoberg/falcon-docs
+
+For any other inquiries visit those links as well.
