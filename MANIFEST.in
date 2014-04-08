@@ -4,3 +4,4 @@ include README.md
 include README.rst
 include VERSION
 include requirements.txt
+include examples

@@ -17,15 +17,11 @@ designed to handle disjunctive queries within metric spaces. The user
 provides weights for positive examples; our system 'learns' the implied
 concept and returns similar objects."
 
-Development branch status
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-|Build Status|
-
 Master branch status
 ~~~~~~~~~~~~~~~~~~~~
 
-|Build Status|
+.. |Build Status| image:: https://travis-ci.org/icaoberg/falcon.svg?branch=master
+   :target: https://travis-ci.org/icaoberg/falcon
 
 Pre-Requisites
 --------------
@@ -84,6 +80,67 @@ If you wish to install falcon in a virtual enviroment, then you can do
 `virtualenv <https://pypi.python.org/pypi/virtualenv>`__ installed in
 your working system.
 
+Usage
+-----
+
+There is only one method that you need to know about
+
+::
+
+    falcon.search.query(good_set, candidates, alpha=-5, 
+            metric='euclidean', normalization='zscore', debug=False)
+
+Here is a brief description of each of the input arguments
+
+-  ``good_set`` and ``candidates`` are two lists of lists where each
+   member of both lists has the same shape.
+
+``record = [<identifier>, <initial_score>, <feature_vector>]``
+
+For example in ``wine.py``, I download a CSV file where the first
+``feature_vector`` looks like this
+
+``[1,14.23,1.71,2.43,15.6,127,2.8,3.06,.28,2.29,5.64,1.04,3.92,1065]``
+
+and then I modify it like this
+
+::
+
+  good_set = []   
+  identifier = 'wine00'   
+  initial_score = 1   
+  feature_vector = [1,14.23,1.71,2.43,15.6,127,2.8,3.06,.28,2.29,5.64,1.04,3.92,1065]   
+  good_set.append([identifier, initial_score, feature_vector])
+
+
+For more information about the definition of the initial score, please
+refer to the article. In all my examples I use a initial score of 1,
+that is, all images have the same weight. The identifier should be
+unique (though not enforced), so you can tell images apart. This package
+assumes every object is represented by a
+`feature <http://en.wikipedia.org/wiki/Feature_(machine_learning)>`__
+vector. Feature calculation goes beyond the scope of this package. There
+are many feature calculation/machine learning packages out there that
+you might find useful, like `OpenCV <http://opencv.org/>`__,
+`mahotas <https://pypi.python.org/pypi/mahotas>`__ and
+`SLIC <http://lanec1web1.compbio.cs.cmu.edu/release/>`__.
+
+-  ``alpha``. For more information about alpha, please refer to the
+   article. The recommended value by the paper is -5, which is the
+   default value used in this package.
+
+-  ``metric``. In the research article, a measure of distance ``d`` is
+   used to calculate the distance between two feature vectors. The
+   default value is ``euclidean`` (Euclidean distance) and other
+   supported metrics are ``cityblock`` (Manhattan distance) and
+   ``hamming`` (Hamming distance).
+
+-  ``normalization``. Feature normalization option. Default is
+   ``zscore``. Alternative option is ``standard``.
+
+-  ``debug``. If debug flag is on, then it should print more information
+   about the calculation as they happen.
+
 Examples
 --------
 
@@ -100,14 +157,14 @@ The examples have a dependency that the package does not, since I use
 `tabulate <https://pypi.python.org/pypi/tabulate>`__ to pretty print the
 results from the examples.
 
-In my humble opinion, he best way to run the examples is using
+In my humble opinion, the best way to run the examples is using
 `virtualenv <https://pypi.python.org/pypi/virtualenv>`__ -which is what
-I do for `travis <https://travis-ci.org/icaoberg/falcon>`__. The next
+I do for `travis <https://travis-ci.org/icaoberg/falcon>`__-. The next
 commands assume you have virtualenv available.
 
 ::
 
-    virtualenv falcon ---system-site-packages
+    virtualenv falcon --system-site-packages
     . ./falcon/bin/activate
     cd falcon
     mkdir src
@@ -283,7 +340,8 @@ number\_of\_feature\_vectors\_performance-euclidean\_distance.py
                             800            0.176096
                             900            0.180116
 
-    There is a clear trend that is dependent on the number of feature vectors. You know what? Why don't we try making a pretty plot as well
+    There is a clear trend that is dependent on the number of feature vectors.
+    You know what? Why don't we try making a pretty plot as well
 
 .. figure:: https://raw.githubusercontent.com/icaoberg/falcon/master/images/number_of_feature_vectors_performance-euclidean_distance.png
    :alt: 
@@ -322,7 +380,8 @@ number\_of\_features\_performance-euclidean\_distance.py
                      900            0.149411
                      950            0.14823
 
-    There is a clear trend that is dependent on the number of feature vectors. You know what? Why don't we try making a pretty plot as well
+    There is a clear trend that is dependent on the number of feature vectors. 
+    You know what? Why don't we try making a pretty plot as well
 
 .. figure:: https://raw.githubusercontent.com/icaoberg/falcon/dev/images/number_of_feature_performance-euclidean_distance.png
    :alt: 
@@ -368,8 +427,3 @@ To submit bugs about the documentation visit
 https://github.com/icaoberg/falcon-docs
 
 For any other inquiries visit those links as well.
-
-.. |Build Status| image:: https://travis-ci.org/icaoberg/falcon.svg?branch=dev
-   :target: https://travis-ci.org/icaoberg/falcon
-.. |Build Status| image:: https://travis-ci.org/icaoberg/falcon.svg?branch=master
-   :target: https://travis-ci.org/icaoberg/falcon
