@@ -65,31 +65,19 @@ Usage
 There is only one method that you need to know about
 
 ```
-falcon.search.query( good_set, candidates, alpha=-5, metric='euclidean', normalization='zscore', debug=False)
-Returns a ranked list
-
-:param alpha: alpha
-:type alpha: double
-:param candidates: list of image ids from candidates
-:type candidates: double
-:param good_set: list of image ids from members of the good set
-:type good_set: list of longs
-:param metric: a valid metric
-:type metric: string
-:param normalization: normalization parameter. default value is 'zscore'
-:type normalization: string
-:rtype: list of ranked image
+falcon.search.query( good_set, candidates, alpha=-5, 
+        metric='euclidean', normalization='zscore', debug=False)
 ```
 
-Lets discuss each of the input arguments.
+Here is a brief description of each of the input arguments 
 
-* ```good_set``` and ```candidates``` are two lists of lists where each member of both list has the same shape.
+* ```good_set``` and ```candidates``` are two lists of lists where each member of both lists has the same shape.
 
   ```
   record = [ <identifier>, <initial_score>, <feature_vector>]
   ```
 
-  For example in ``wine.py`` we download a CSV file where its first feature_vector looks like this
+  For example in ```wine.py```, I download a CSV file where the first ```feature_vector``` looks like this
 
   ```
   1,14.23,1.71,2.43,15.6,127,2.8,3.06,.28,2.29,5.64,1.04,3.92,1065
@@ -104,6 +92,7 @@ Lets discuss each of the input arguments.
   feature_vector = [1,14.23,1.71,2.43,15.6,127,2.8,3.06,.28,2.29,5.64,1.04,3.92,1065]
   good_set.append([identifier, initial_score, feature_vector])
   ```
+  
   For more information about the definition of the initial score, please refer to the article. In all my examples I use a initial score of 1, that is, all images have the same weight. The identifier should be unique (though not enforced), so you can tell images apart. This package assumes every object is represented by a [feature](http://en.wikipedia.org/wiki/Feature_(machine_learning)) vector. Feature calculation goes beyond the scope of this package. There are many feature calculation/machine learning packages out there that you might find useful, like [OpenCV](http://opencv.org/), [mahotas](https://pypi.python.org/pypi/mahotas) and [SLIC](http://lanec1web1.compbio.cs.cmu.edu/release/).
 
 * ```alpha```. For more information about alpha, please refer to the article. The recommended value by the paper is -5, which is the default value used in this package.
