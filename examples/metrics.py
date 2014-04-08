@@ -1,7 +1,7 @@
 import urllib
 from numpy import genfromtxt
 from os import remove
-import falcon
+import halcon
 from time import time
 from sys import exit
 
@@ -36,7 +36,7 @@ for datum in data:
 
 data = {}
 for metric in metrics:
-	[iids, scores] = falcon.search.query( query_wines, dataset, metric=metric, normalization='standard', debug=True )
+	[iids, scores] = halcon.search.query( query_wines, dataset, metric=metric, normalization='standard', debug=True )
 	data[metric] = iids
 
 #icaoberg: just in case people do not have the tabulate package

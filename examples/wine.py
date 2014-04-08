@@ -1,7 +1,7 @@
 import urllib
 from numpy import genfromtxt
 from os import remove
-import falcon
+import halcon
 from time import time
 from sys import exit
 
@@ -32,7 +32,7 @@ for datum in data:
 	counter = counter + 1
 
 t = time()
-[iids, scores] = falcon.search.query( query_wines, dataset, metric='cityblock', normalization='standard', debug=True )
+[iids, scores] = halcon.search.query( query_wines, dataset, metric='cityblock', normalization='standard', debug=True )
 t = time() - t
 print "Elapsed time: " + str(t) + " seconds\n"
 
