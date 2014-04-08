@@ -24,9 +24,9 @@ exec(compile(open('VERSION').read(), 'VERSION', 'exec'))
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
-setup(name = 'falcon',
+setup(name = 'halcon',
       version = __version__,
-      description = ('FALCON: '
+      description = ('Python implementation of FALCON: '
       	'Feedback Adaptive Loop for Content-Based Retrieval'),
       long_description=read('README.rst'),
       author = 'Ivan Cao-Berg',
@@ -45,4 +45,4 @@ setup(name = 'falcon',
             'Topic :: Scientific/Engineering :: Mathematics',
             'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
             'Development Status :: 4 - Beta'],
-      py_modules=['falcon.search'])
+      py_modules=['halcon.search'])
