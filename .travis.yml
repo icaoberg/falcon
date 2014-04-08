@@ -43,6 +43,7 @@ script:
     - python examples/wine.py
     - python examples/metrics.py
     - python examples/alphas.py
+    - python tests/TestHalcon.py
 
 # command to run tests
 # script: nosetests
