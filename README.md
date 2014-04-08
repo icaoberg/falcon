@@ -1,6 +1,6 @@
-falcon
+halcon
 ======
-falcon is a python implementation of the eedback Adaptive Loop for Content-Based Retrieval (FALCON) algorith as described in 
+halcon is a python implementation of the eedback Adaptive Loop for Content-Based Retrieval (FALCON) algorith as described in 
 
 * Leejay Wu, Christos Faloutsos, Katia P. Sycara, and Terry R. Payne. 2000. FALCON: Feedback Adaptive Loop for Content-Based Retrieval. In Proceedings of the 26th International Conference on Very Large Data Bases (VLDB '00), Amr El Abbadi, Michael L. Brodie, Sharma Chakravarthy, Umeshwar Dayal, Nabil Kamel, Gunter Schlageter, and Kyu-Young Whang (Eds.). Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 297-306.
  
@@ -27,7 +27,8 @@ sudo apt-get install python-numpy python-scipy
 Installation
 ============
 
-There are several ways to install falcon. The most common way is to download the source code, unzip/untar the source code package and run the command
+There are several ways to install halcon. The most common way is to download the source code, unzip/untar the source code package and run the command
+
 ```
 sudo python setup.py install
 ```
@@ -36,7 +37,7 @@ I have plans of submitting this package to the Python Package Index.
 If I do so, then should be able to install it by running the command
 
 ```
-sudo pip install falcon
+sudo pip install halcon
 ```
 
 **COMMENT**: falcon depends on [numpy](http://www.numpy.org) and [scipy](http://www.scipy.org). Installing these packages in Windows and MacOSX is not a trivial task. For more information refer to the documentation.
@@ -44,7 +45,7 @@ sudo pip install falcon
 If you wish to install falcon in a virtual enviroment, then you can do
 
 ```
-virtualenv falcon
+virtualenv halcon
 cd falcon
 source ./bin/activate
 pip install numpy
@@ -65,7 +66,7 @@ Usage
 There is only one method that you need to know about
 
 ```
-falcon.search.query(good_set, candidates, alpha=-5, 
+halcon.search.query(good_set, candidates, alpha=-5, 
         metric='euclidean', normalization='zscore', debug=False)
 ```
 
@@ -117,7 +118,7 @@ The examples have a dependency that the package does not, since I use [tabulate]
 In my humble opinion, the best way to run the examples is using [virtualenv](https://pypi.python.org/pypi/virtualenv) -which is what I do for [travis](https://travis-ci.org/icaoberg/falcon)-. The next commands assume you have virtualenv available.
 
 ```
-virtualenv falcon --system-site-packages
+virtualenv halcon --system-site-packages
 . ./falcon/bin/activate
 cd falcon
 mkdir src
@@ -243,6 +244,8 @@ This example uses this dataset to compare the different metrics available in FAL
        18  wine29       wine17        wine10
        19  wine8        wine8         wine11
 ```
+
+COMMENT: Hamming distance is meant for comparing strings so this example does not make a lot of sense since these features do not represent characters.
 
 ### random_feature_vectors.py
 
