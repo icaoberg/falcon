@@ -89,7 +89,7 @@ cd ..
 python examples/iris.py
 ```
 
-*** iris.py
+### iris.py
 
 ```
 $ python examples/iris.py
@@ -131,7 +131,7 @@ Do the top results in the list above belong to the same class as the query image
 If so, then SCORE! It seems to work.
 ```
 
-*** wine.py
+### wine.py
 
 ```
 $ python examples/wine.py
@@ -167,7 +167,7 @@ Elapsed time: 0.0280928611755 seconds
        19  wine56        0.291853
  ```
 
- *** metrics.py
+ ### metrics.py
 
  ```
  $ python examples/metrics.py
@@ -201,7 +201,7 @@ This example uses this dataset to compare the different metrics available in FAL
        19  wine8        wine8         wine11
 ```
 
-*** random_feature_vectors.py
+### random_feature_vectors.py
 
 ```
 $ python examples/random_feature_vectors.py
@@ -226,7 +226,7 @@ Top Ten Results!
         8  79            7.17429e+14
 ```
 
-*** number_of_feature_vectors_performance-euclidean_distance.py
+### number_of_feature_vectors_performance-euclidean_distance.py
 
 ```
 $ python examples/number_of_feature_vectors_performance-euclidean_distance.py
@@ -252,7 +252,7 @@ There is a clear trend that is dependent on the number of feature vectors. You k
 
 COMMENT: the examples are not seeded so you might get different results.
 
-*** number_of_features_performance-euclidean_distance.py
+### number_of_features_performance-euclidean_distance.py
 
 ``` 
 $ python examples/number_of_features_performance-euclidean_distance.py
