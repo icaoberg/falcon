@@ -165,12 +165,12 @@ Elapsed time: 0.0280928611755 seconds
        17  wine41        0.206469
        18  wine31        0.288536
        19  wine56        0.291853
- ```
+```
 
- ### metrics.py
+### metrics.py
 
- ```
- $ python examples/metrics.py
+```
+$ python examples/metrics.py
 This example uses the wine dataset from
 Machine Learning Repository
 Center for Machine Learning and Intelligent Systems
