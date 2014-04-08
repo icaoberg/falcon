@@ -36,6 +36,7 @@ script:
     - python examples/random_feature_vectors.py
     - rm -f *.pkl
     - python examples/number_of_feature_vectors_performance-euclidean_distance.py
+    - python examples/number_of_features_performance-euclidean_distance.py
     - rm -f *.pkl
     - rm -f *.png
     - python examples/iris.py
