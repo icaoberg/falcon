@@ -66,7 +66,7 @@ try:
 	from tabulate import tabulate
 
 	print "\nThese are the results from this test\n"
-	print tabulate(results, headers=["Number of Feature Vectors","Time (in seconds)"])
+	print tabulate(results, headers=["Number of Features","Time (in seconds)"])
 except:
 	print "Oh no! I could not import tabulate. Do not worry I will save the results in a pickle file"
 
