@@ -38,6 +38,11 @@ setup(name = 'falcon',
       classifiers=[
       	'Programming Language :: Python', 
       	'Intended Audience :: Science/Research',
-      	'Intended Audience :: Developers',
-            'Development Status :: 2 - Pre-Alpha'],
+            'Intended Audience :: Developers',
+            'Intended Audience :: Information Technology',
+            'Topic :: Scientific/Engineering :: Bio-Informatics',
+            'Topic :: Scientific/Engineering :: Information Analysis',
+            'Topic :: Scientific/Engineering :: Mathematics',
+            'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
+            'Development Status :: 4 - Beta'],
       py_modules=['falcon.search'])
