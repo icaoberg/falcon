@@ -37,8 +37,8 @@ t = time() - t
 print "Elapsed time: " + str(t) + " seconds\n"
 
 #icaoberg: i will only display the top ten results
-iids = iids[0:20]
-scores = scores[0:20]
+iids = iids[0:10]
+scores = scores[0:10]
 
 #icaoberg: just in case people do not have the tabulate package
 try:
