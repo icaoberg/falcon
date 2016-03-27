@@ -32,7 +32,7 @@ for datum in data:
 	counter = counter + 1
 
 t = time()
-[iids, scores] = halcon.search.query( query_wines, dataset, metric='cityblock', normalization='standard', debug=True )
+[iids, scores] = halcon.search.query( query_wines, dataset, metric='cityblock', normalization='standard' )
 t = time() - t
 print "Elapsed time: " + str(t) + " seconds\n"
 
