@@ -5,3 +5,4 @@ dist
 falcon.egg-info
 lib
 include
+.Python
