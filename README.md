@@ -4,7 +4,7 @@ halcon
 [![GitHub issues](https://img.shields.io/github/issues/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/issues)
 [![GitHub forks](https://img.shields.io/github/forks/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/network)
 [![GitHub stars](https://img.shields.io/github/stars/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/stargazers)
-[![PyPI version](https://badge.fury.io/py/falcon.svg)](https://badge.fury.io/py/falcon)
+[![PyPI version](https://badge.fury.io/py/halcon.svg)](https://badge.fury.io/py/halcon)
 [![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://raw.githubusercontent.com/icaoberg/falcon/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/icaoberg/falcon.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D)
 
@@ -22,15 +22,9 @@ FALCON is, as described in the article abstract, "a novel method that is designe
 
 Pre-Requisites
 --------------
-- numpy
-- scipy
-
-To install the prerequisites in Ubuntu 12.04
-
-```
-sudo apt-get install update
-sudo apt-get install python-numpy python-scipy
-```
+- [numpy](http://www.numpy.org/)
+- [scipy](http://www.scipy.org/)
+- [mpmath](http://mpmath.org/)
 
 Installation
 ============
@@ -50,7 +44,7 @@ sudo pip install halcon
 
 **COMMENT**: halcon depends on [numpy](http://www.numpy.org) and [scipy](http://www.scipy.org). Installing these packages in Windows and MacOSX is not a trivial task. For more information refer to the documentation.
 
-If you wish to install halcon in a virtual enviroment, then you can do
+If you wish to install halcon in a virtual enviroment from source code, then you can do
 
 ```
 virtualenv halcon
@@ -58,12 +52,31 @@ cd falcon
 source ./bin/activate
 pip install numpy
 pip install scipy
+pip install npmath
+
 mkdir src
 cd src
 git clone git@github.com:icaoberg/falcon.git
 cd falcon
 python setup.py install
+
 cd ../../
+deactivate
+```
+
+
+If you wish to install halcon in a virtual enviroment from the [PyPI](https://pypi.python.org/pypi/halcon), then you can do
+
+```
+virtualenv halcon
+cd falcon
+source ./bin/activate
+
+pip install numpy
+pip install scipy
+pip install npmath
+pip install halcon
+
 deactivate
 ```
 
@@ -282,7 +295,7 @@ Top Ten Results!
 
 ### human_protein_atlas.ipynb
 
-I have included a Jupyter notebook that shows an example using [Subcellular Location Features](http://murphylab.web.cmu.edu/services/SLF/features.html) on some image from the [Human Protein Atlas](http://www.proteinatlas.org/).
+I have included a Jupyter notebook that shows an example using [Subcellular Location Features](http://murphylab.web.cmu.edu/services/SLF/features.html) on some images from the [Human Protein Atlas](http://www.proteinatlas.org/).
 
 Using the query image
 
