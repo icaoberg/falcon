@@ -87,14 +87,14 @@ def big_distance(alpha, candidate, good_set, weighted=True,
     '''
     Calculates the distance between a candidate and every member of the good set
 
-    :param alpha:alpha
-    :type alpha:double
-    :param candidate:a feature vector
-    :type candidates:list
-    :param good_set:a list of feature vectors
-    :type good_set:array
-    :param weight:weight
-    :type weight:double
+    :param alpha: alpha
+    :type alpha: double
+    :param candidate: a feature vector
+    :type candidates: list
+    :param good_set: a list of feature vectors
+    :type good_set: array
+    :param weight: weight
+    :type weight: double
     :rtype: total_distance
     '''
 
@@ -104,17 +104,11 @@ def big_distance(alpha, candidate, good_set, weighted=True,
 
         total = mpf('0')
 
-        if debug:
-            print "very_big:"+str(very_big)
-            print "total:"+str(total)
-
         #number of images
         counts = len(good_set)
 
         #pairwise distance
         weights = mpf('0')
-        if debug:
-            print "weights:"+str(weights)
 
         for index in range(counts):
             if weighted:
@@ -122,16 +116,9 @@ def big_distance(alpha, candidate, good_set, weighted=True,
             else:
                 weight = mpf('1')
 
-            if debug:
-                print "count:"+str(index)
-                print "weight:"+str(weight)
-
             weights = weights+weight
             score = distance(candidate[2],
                 good_set[index][2], alpha=alpha, metric=metric )
-
-            if debug:
-                print "score:"+str(score)
 
             if alpha < 0 and score == 0:
                 total_distance = 0
@@ -153,12 +140,12 @@ def distance(vector1, vector2, alpha=2, metric='euclidean' ):
     '''
     Helper function that calculates the alpha
 
-    :param vector1:a vector
-    :type vector1:list of doubles
-    :param vector2:a vector
-    :type vector2:list of doubles
+    :param vector1: a vector
+    :type vector1: list of doubles
+    :param vector2: a vector
+    :type vector2: list of doubles
     :param metric: euclidean, mahalanobis, seuclidean, cityblock
-    :type metric:string
+    :type metric: string
     :rtype: norm between vectors A and B
     '''
 
@@ -278,22 +265,3 @@ def feature_normalization(trainset, testset, normalization, debug=False):
                 testset_normfeat[i]])
 
         return new_trainset, new_testset
-
-def counter(filename, word):
-    '''
-    Helper function that counts the occurences of a word in a file
-    '''
-
-    count = 0
-    try:
-        textfile = open(filename, 'r')
-    except:
-        print "Unable to open file"
-        return count
-
-    for line in textfile:
-        if word in line:
-            count += 1
-
-    textfile.close()
-    return count
