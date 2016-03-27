@@ -17,7 +17,7 @@
 
 import numpy
 import scipy.spatial.distance as distances
-
+from mpmath import *
 from operator import itemgetter
 
 def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zscore', debug=False):
@@ -56,9 +56,16 @@ def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zsc
 
     for candidate in candidates:
         iids.append(candidate[0])
-        candidate_distance = big_distance(alpha, candidate, 
+        if debug:
+            print "Analyzing candidate: " + candidate[0]
+
+        candidate_distance = big_distance(alpha, candidate,
             good_set, metric=metric, debug=debug)
-        ratings.append(candidate_distance)
+        if debug:
+            print "Candidate distance: " + str(candidate_distance)
+
+        if candidate_distance != 'NaN':
+            ratings.append(candidate_distance)
 
     tups = zip(iids, ratings) # zip them as tuples
 
@@ -75,7 +82,7 @@ def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zsc
 
     return [sorted_iids, sorted_scores]
 
-def big_distance(alpha, candidate, good_set, weighted=True, 
+def big_distance(alpha, candidate, good_set, weighted=True,
         metric='euclidean', debug=True):
     '''
     Calculates the distance between a candidate and every member of the good set
@@ -91,35 +98,55 @@ def big_distance(alpha, candidate, good_set, weighted=True,
     :rtype: total_distance
     '''
 
-    very_big = float(numpy.finfo(numpy.float32).max)/2
-    total = numpy.float64(0)
+    try:
+        mp.dps = 50
+        very_big = float(numpy.finfo(numpy.float32).max)/2
 
-    #number of images
-    counts = len(good_set)
+        total = mpf('0')
 
-    #pairwise distance
-    weights = numpy.float64(0)
+        if debug:
+            print "very_big:"+str(very_big)
+            print "total:"+str(total)
 
-    for index in range(counts):
-        if weighted:
-            weight = numpy.float64(good_set[index][1])
-        else:
-            weight = 1
+        #number of images
+        counts = len(good_set)
 
-        weights = weights+weight
-        score = distance(candidate[2], 
-            good_set[index][2], alpha=alpha, metric=metric )
+        #pairwise distance
+        weights = mpf('0')
+        if debug:
+            print "weights:"+str(weights)
 
-        if alpha < 0 and score == 0:
-            total_distance = 0
-            return total_distance
+        for index in range(counts):
+            if weighted:
+                weight = mpf(good_set[index][1])
+            else:
+                weight = mpf('1')
 
-        score = weight*numpy.power(score, numpy.float64(alpha))
-        total = total + score
+            if debug:
+                print "count:"+str(index)
+                print "weight:"+str(weight)
 
-    total_distance = total/weights
-    total_distance = total_distance**(1.0/1.0*alpha)
- 
+            weights = weights+weight
+            score = distance(candidate[2],
+                good_set[index][2], alpha=alpha, metric=metric )
+
+            if debug:
+                print "score:"+str(score)
+
+            if alpha < 0 and score == 0:
+                total_distance = 0
+                return total_distance
+
+            score = mpf(weight)*numpy.power(mpf(score), mpf(alpha))
+            total = total + score
+
+        total_distance = mpf(total)/mpf(weights)
+        total_distance = total_distance**mpf(1.0/1.0*alpha)
+    except:
+        if debug:
+            print 'Unable to calculate big distance'
+        total_distance = 'NaN'
+
     return total_distance
 
 def distance(vector1, vector2, alpha=2, metric='euclidean' ):
@@ -135,14 +162,15 @@ def distance(vector1, vector2, alpha=2, metric='euclidean' ):
     :rtype: norm between vectors A and B
     '''
 
-    alpha = numpy.float64(1.0*alpha)
-    vector1 = numpy.float64(numpy.array(vector1))
-    vector2 = numpy.float64(numpy.array(vector2))
+    mp.dps = 50
+    alpha = mpf(1.0*alpha)
+    vector1 = matrix(numpy.array(vector1))
+    vector2 = matrix(numpy.array(vector2))
 
     if metric == 'euclidean':
         vector_norm = distances.euclidean( vector1, vector2 )
     elif metric == 'mahalanobis':
-        vi = numpy.linalg.inv( numpy.cov( 
+        vi = numpy.linalg.inv( numpy.cov(
             numpy.concatenate((vector1, vector2)).T))
         vector_norm = distances.mahalanobis( vector1, vector2, vi )
     elif metric == 'seuclidean':

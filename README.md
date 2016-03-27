@@ -8,10 +8,10 @@ halcon
 [![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://raw.githubusercontent.com/icaoberg/falcon/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/icaoberg/falcon.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D)
 
-halcon is a python implementation of the Feedback Adaptive Loop for Content-Based Retrieval (FALCON) algorithm as described in 
+halcon is a python implementation of the Feedback Adaptive Loop for Content-Based Retrieval (FALCON) algorithm as described in
 
-* Leejay Wu, Christos Faloutsos, Katia P. Sycara, and Terry R. Payne. 2000. FALCON: Feedback Adaptive Loop for Content-Based Retrieval. In Proceedings of the 26th International Conference on Very Large Data Bases (VLDB '00), Amr El Abbadi, Michael L. Brodie, Sharma Chakravarthy, Umeshwar Dayal, Nabil Kamel, Gunter Schlageter, and Kyu-Young Whang (Eds.). Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 297-306.
- 
+* Leejay Wu, Christos Faloutsos, Katia P. Sycara, and Terry R. Payne. 2000. [FALCON: Feedback Adaptive Loop for Content-Based Retrieval](http://www.cs.cmu.edu/~christos/PUBLICATIONS/vldb2k-falcon.pdf). In Proceedings of the 26th International Conference on Very Large Data Bases (VLDB '00), Amr El Abbadi, Michael L. Brodie, Sharma Chakravarthy, Umeshwar Dayal, Nabil Kamel, Gunter Schlageter, and Kyu-Young Whang (Eds.). Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 297-306.
+
 FALCON is, as described in the article abstract, "a novel method that is designed to handle disjunctive queries within metric spaces. The user provides weights for positive examples; our system 'learns' the implied concept and returns similar objects."
 
 ### Development branch status
@@ -22,15 +22,9 @@ FALCON is, as described in the article abstract, "a novel method that is designe
 
 Pre-Requisites
 --------------
-- numpy
-- scipy
-
-To install the prerequisites in Ubuntu 12.04
-
-```
-sudo apt-get install update
-sudo apt-get install python-numpy python-scipy
-```
+- [numpy](http://www.numpy.org/)
+- [scipy](http://www.scipy.org/)
+- [mpmath](http://mpmath.org/)
 
 Installation
 ============
@@ -40,8 +34,8 @@ There are several ways to install halcon. The most common way is to download the
 ```
 sudo python setup.py install
 ```
- 
-I have plans of submitting this package to the Python Package Index. 
+
+I have plans of submitting this package to the Python Package Index.
 If I do so, then should be able to install it by running the command
 
 ```
@@ -50,7 +44,7 @@ sudo pip install halcon
 
 **COMMENT**: halcon depends on [numpy](http://www.numpy.org) and [scipy](http://www.scipy.org). Installing these packages in Windows and MacOSX is not a trivial task. For more information refer to the documentation.
 
-If you wish to install halcon in a virtual enviroment, then you can do
+If you wish to install halcon in a virtual enviroment from source code, then you can do
 
 ```
 virtualenv halcon
@@ -58,12 +52,31 @@ cd falcon
 source ./bin/activate
 pip install numpy
 pip install scipy
+pip install npmath
+
 mkdir src
 cd src
 git clone git@github.com:icaoberg/falcon.git
 cd falcon
 python setup.py install
+
 cd ../../
+deactivate
+```
+
+
+If you wish to install halcon in a virtual enviroment from [PyPI](https://pypi.python.org/pypi/halcon), then you can do
+
+```
+virtualenv halcon
+cd falcon
+source ./bin/activate
+
+pip install numpy
+pip install scipy
+pip install npmath
+pip install halcon
+
 deactivate
 ```
 
@@ -74,11 +87,11 @@ Usage
 There is only one method that you need to know about
 
 ```
-halcon.search.query(good_set, candidates, alpha=-5, 
+halcon.search.query(good_set, candidates, alpha=-5,
         metric='euclidean', normalization='zscore', debug=False)
 ```
 
-Here is a brief description of each of the input arguments 
+Here is a brief description of each of the input arguments
 
 * ```good_set``` and ```candidates``` are two lists of lists where each member of both lists has the same shape.
 
@@ -110,7 +123,7 @@ Here is a brief description of each of the input arguments
 
 * ```normalization```. Feature normalization option. Default is ```zscore```. Alternative option is ```standard```.
 
-* ```debug```. If debug flag is on, then it should print more information about the calculation as they happen. 
+* ```debug```. If debug flag is on, then it should print more information about the calculation as they happen.
 
 Examples
 --------
@@ -255,207 +268,19 @@ This example uses this dataset to compare the different metrics available in FAL
 
 COMMENT: Hamming distance is meant for comparing strings so this example does not make a lot of sense since these features do not represent characters.
 
-### random_feature_vectors.py
+### human_protein_atlas.ipynb
 
-```
-$ python examples/random_feature_vectors.py
-Generating random query image
-Query image name: img
-Elapsed time: 7.39097595215e-05 seconds
-Generating random dataset
-Elapsed time: 0.00141191482544 seconds
-Querying with one image
-Elapsed time: 0.0233750343323 seconds
-Top Ten Results!
-  Ranking  Identifier          Score
----------  ------------  -----------
-        0  img           0
-        1  8             1.30582e+14
-        2  85            2.70987e+14
-        3  25            3.68567e+14
-        4  97            6.19091e+14
-        5  11            6.54178e+14
-        6  70            6.55048e+14
-        7  91            6.89901e+14
-        8  79            7.17429e+14
-```
+I have included a Jupyter notebook that shows an example using [Subcellular Location Features](http://murphylab.web.cmu.edu/services/SLF/features.html) on some images from the [Human Protein Atlas](http://www.proteinatlas.org/).
 
-### number_of_feature_vectors_performance-euclidean_distance.py
+Using the query image
 
-```
-$ python examples/number_of_feature_vectors_performance-euclidean_distance.py
-Generating and querying on synthetic datasets, please wait...
+![100_A12_1_blue_green.jpg](images/100_A12_1_blue_green.jpg)
 
-These are the results from this test
-  Number of Feature Vectors    Time (in seconds)
----------------------------  -------------------
-                        100            0.0247221
-                        200            0.0378191
-                        300            0.0665781
-                        400            0.0999439
-                        500            0.123964
-                        600            0.120883
-                        700            0.138576
-                        800            0.176096
-                        900            0.180116
+we queried the content database and determined the most similar image is
 
-There is a clear trend that is dependent on the number of feature vectors. You know what? Why don't we try making a pretty plot as well
-```
+![100_B12_2_blue_green.jpg](images/100_B12_2_blue_green.jpg)
 
-![](https://raw.githubusercontent.com/icaoberg/falcon/master/images/number_of_feature_vectors_performance-euclidean_distance.png)
-
-COMMENT: the examples are not seeded so you might get different results.
-
-### number_of_features_performance-euclidean_distance.py
-
-``` 
-$ python examples/number_of_features_performance-euclidean_distance.py
-Generating and querying on synthetic datasets, please wait...                   ]
-
-These are the results from this test
-
-  Number of Features    Time (in seconds)
---------------------  -------------------
-                  50            0.0666399
-                 100            0.0619891
-                 150            0.0683651
-                 200            0.0779331
-                 250            0.077204
-                 300            0.0829229
-                 350            0.087312
-                 400            0.092144
-                 450            0.09745
-                 500            0.111081
-                 550            0.112051
-                 600            0.11652
-                 650            0.119202
-                 700            0.123624
-                 750            0.127126
-                 800            0.134157
-                 850            0.138586
-                 900            0.149411
-                 950            0.14823
-
-There is a clear trend that is dependent on the number of feature vectors. You know what? Why don't we try making a pretty plot as well
-```
-
-![](https://raw.githubusercontent.com/icaoberg/falcon/dev/images/number_of_feature_performance-euclidean_distance.png)
-
-COMMENT: the examples are not seeded so you might get different results.
-
-### alphas.py
-
-```
-$ python examples/alphas.py
-This example uses the wine dataset from
-Machine Learning Repository
-Center for Machine Learning and Intelligent Systems
-http://archive.ics.uci.edu/ml/datasets/Wine
-This example uses this dataset to compare results at different alphas
-
-  Ranking  alpha:-100    alpha:-50    alpha:-5    alpha:5    alpha:50    alpha:100
----------  ------------  -----------  ----------  ---------  ----------  -----------
-        0  wine1         wine1        wine1       wine1      wine1       wine1
-        1  wine2         wine2        wine21      wine21     wine2       wine2
-        2  wine3         wine3        wine57      wine57     wine3       wine3
-        3  wine4         wine4        wine41      wine41     wine4       wine4
-        4  wine5         wine5        wine23      wine23     wine5       wine5
-        5  wine6         wine6        wine30      wine30     wine6       wine6
-        6  wine7         wine7        wine45      wine45     wine7       wine7
-        7  wine8         wine8        wine10      wine10     wine8       wine8
-        8  wine9         wine9        wine48      wine48     wine9       wine9
-        9  wine10        wine10       wine7       wine7      wine10      wine10
-       10  wine11        wine11       wine36      wine36     wine11      wine11
-       11  wine12        wine12       wine55      wine55     wine12      wine12
-       12  wine13        wine13       wine56      wine56     wine13      wine13
-       13  wine14        wine14       wine52      wine52     wine14      wine14
-       14  wine15        wine15       wine3       wine3      wine15      wine15
-       15  wine16        wine16       wine43      wine43     wine16      wine16
-       16  wine17        wine17       wine9       wine9      wine17      wine17
-       17  wine18        wine18       wine49      wine49     wine18      wine18
-       18  wine19        wine19       wine29      wine29     wine19      wine19
-       19  wine20        wine20       wine8       wine8      wine20      wine20
-       20  wine21        wine21       wine25      wine25     wine21      wine21
-       21  wine22        wine22       wine50      wine50     wine22      wine22
-       22  wine23        wine23       wine24      wine24     wine23      wine23
-       23  wine24        wine24       wine27      wine27     wine24      wine24
-       24  wine25        wine25       wine58      wine58     wine25      wine25
-       25  wine26        wine26       wine47      wine47     wine26      wine26
-       26  wine27        wine27       wine20      wine20     wine27      wine27
-       27  wine28        wine28       wine11      wine11     wine28      wine28
-       28  wine29        wine29       wine17      wine17     wine29      wine29
-       29  wine30        wine30       wine53      wine53     wine30      wine30
-       30  wine31        wine31       wine13      wine13     wine31      wine31
-       31  wine32        wine32       wine2       wine2      wine32      wine32
-       32  wine33        wine33       wine6       wine6      wine33      wine33
-       33  wine34        wine34       wine54      wine54     wine34      wine34
-       34  wine35        wine35       wine35      wine35     wine35      wine35
-       35  wine36        wine36       wine59      wine59     wine36      wine36
-       36  wine37        wine37       wine33      wine33     wine37      wine37
-       37  wine38        wine38       wine32      wine32     wine38      wine38
-       38  wine39        wine39       wine16      wine16     wine39      wine39
-       39  wine40        wine40       wine31      wine31     wine40      wine40
-       40  wine41        wine41       wine4       wine4      wine41      wine41
-       41  wine42        wine42       wine37      wine37     wine42      wine42
-       42  wine43        wine43       wine18      wine18     wine43      wine43
-       43  wine44        wine44       wine51      wine51     wine44      wine44
-       44  wine45        wine45       wine12      wine12     wine45      wine45
-       45  wine46        wine46       wine40      wine40     wine46      wine46
-       46  wine47        wine47       wine5       wine5      wine47      wine47
-       47  wine48        wine48       wine39      wine39     wine48      wine48
-       48  wine49        wine49       wine22      wine22     wine49      wine49
-       49  wine50        wine50       wine38      wine38     wine50      wine50
-       50  wine51        wine51       wine15      wine15     wine51      wine51
-       51  wine52        wine52       wine14      wine14     wine52      wine52
-       52  wine53        wine53       wine28      wine28     wine53      wine53
-       53  wine54        wine54       wine34      wine34     wine54      wine54
-       54  wine55        wine55       wine46      wine46     wine55      wine55
-       55  wine56        wine56       wine42      wine42     wine56      wine56
-       56  wine57        wine57       wine26      wine26     wine57      wine57
-       57  wine58        wine58       wine110     wine110    wine58      wine58
-       58  wine59        wine59       wine19      wine19     wine59      wine59
-       59  wine63        wine64       wine44      wine44     wine64      wine63
-       60  wine64        wine66       wine82      wine82     wine66      wine64
-       61  wine66        wine67       wine121     wine121    wine67      wine66
-       62  wine67        wine74       wine67      wine67     wine74      wine67
-       63  wine68        wine75       wine75      wine75     wine75      wine68
-       64  wine70        wine79       wine99      wine99     wine79      wine70
-       65  wine72        wine82       wine66      wine66     wine82      wine72
-       66  wine73        wine85       wine74      wine74     wine85      wine73
-       67  wine74        wine86       wine96      wine96     wine86      wine74
-       68  wine75        wine96       wine105     wine105    wine96      wine75
-       69  wine77        wine98       wine85      wine85     wine98      wine77
-       70  wine79        wine99       wine101     wine101    wine99      wine79
-       71  wine80        wine101      wine64      wine64     wine101     wine80
-       72  wine81        wine105      wine79      wine79     wine105     wine81
-       73  wine82        wine110      wine86      wine86     wine110     wine82
-       74  wine83        wine121      wine98      wine98     wine121     wine83
-       75  wine85        wine103      wine103     wine103    wine103     wine85
-       76  wine86        wine72       wine72      wine72     wine72      wine86
-       77  wine87        wine95       wine95      wine95     wine95      wine87
-       78  wine88        wine94       wine94      wine94     wine94      wine88
-       79  wine89        wine70       wine70      wine70     wine70      wine89
-       80  wine90        wine107      wine107     wine107    wine107     wine90
-       81  wine94        wine127      wine127     wine127    wine127     wine94
-       82  wine95        wine126      wine126     wine126    wine126     wine95
-       83  wine96        wine68       wine68      wine68     wine68      wine96
-       84  wine97        wine109      wine109     wine109    wine109     wine97
-       85  wine98        wine118      wine118     wine118    wine118     wine98
-       86  wine99        wine117      wine117     wine117    wine117     wine99
-       87  wine100       wine80       wine80      wine80     wine80      wine100
-       88  wine101       wine100      wine100     wine100    wine100     wine101
-       89  wine102       wine81       wine81      wine81     wine81      wine102
-       90  wine103       wine77       wine77      wine77     wine77      wine103
-       91  wine104       wine129      wine129     wine129    wine129     wine104
-       92  wine105       wine115      wine115     wine115    wine115     wine105
-       93  wine107       wine63       wine63      wine63     wine63      wine107
-       94  wine109       wine112      wine112     wine112    wine112     wine109
-       95  wine110       wine120      wine120     wine120    wine120     wine110
-       96  wine111       wine73       wine73      wine73     wine73      wine111
-       97  wine112       wine89       wine89      wine89     wine89      wine112
-       98  wine114       wine111      wine111     wine111    wine111     wine114
-       99  wine115       wine125      wine125     wine125    wine125     wine115
-```
+Do you think they look similar?
 
 Documentation
 -------------
