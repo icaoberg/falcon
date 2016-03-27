@@ -268,31 +268,6 @@ This example uses this dataset to compare the different metrics available in FAL
 
 COMMENT: Hamming distance is meant for comparing strings so this example does not make a lot of sense since these features do not represent characters.
 
-### random_feature_vectors.py
-
-```
-$ python examples/random_feature_vectors.py
-Generating random query image
-Query image name: img
-Elapsed time: 7.39097595215e-05 seconds
-Generating random dataset
-Elapsed time: 0.00141191482544 seconds
-Querying with one image
-Elapsed time: 0.0233750343323 seconds
-Top Ten Results!
-  Ranking  Identifier          Score
----------  ------------  -----------
-        0  img           0
-        1  8             1.30582e+14
-        2  85            2.70987e+14
-        3  25            3.68567e+14
-        4  97            6.19091e+14
-        5  11            6.54178e+14
-        6  70            6.55048e+14
-        7  91            6.89901e+14
-        8  79            7.17429e+14
-```
-
 ### human_protein_atlas.ipynb
 
 I have included a Jupyter notebook that shows an example using [Subcellular Location Features](http://murphylab.web.cmu.edu/services/SLF/features.html) on some images from the [Human Protein Atlas](http://www.proteinatlas.org/).
