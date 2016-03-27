@@ -1,0 +1,3 @@
+[submodule "falcon-docs"]
+	path = falcon-docs
+	url = git@github.com:icaoberg/falcon-docs.git
