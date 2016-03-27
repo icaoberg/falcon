@@ -153,12 +153,12 @@ def distance(vector1, vector2, alpha=2, metric='euclidean' ):
     '''
     Helper function that calculates the alpha
 
-    :param vector1:a vector
-    :type vector1:list of doubles
-    :param vector2:a vector
-    :type vector2:list of doubles
+    :param vector1: a vector
+    :type vector1: list of doubles
+    :param vector2: a vector
+    :type vector2: list of doubles
     :param metric: euclidean, mahalanobis, seuclidean, cityblock
-    :type metric:string
+    :type metric: string
     :rtype: norm between vectors A and B
     '''
 
