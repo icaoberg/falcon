@@ -50,7 +50,7 @@ print dataset[0]
 print "\nSo I expect that if FALCON is working correctly, then iid1 should be the top hit!"
 
 t = time()
-[iids, scores] = halcon.search.query( query_image, dataset, normalization='standard', debug=True )
+[iids, scores] = halcon.search.query( query_image, dataset, normalization='standard' )
 t = time() - t
 print "Elapsed time: " + str(t) + " seconds\n"
 
