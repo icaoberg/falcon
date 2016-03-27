@@ -1,6 +1,9 @@
 halcon
 ======
 
+.. image:: https://img.shields.io/badge/big%20data-true-blue.svg
+    :target: https://en.wikipedia.org/wiki/Big_data
+
 .. image:: https://img.shields.io/github/issues/icaoberg/falcon.svg
     :target: https://github.com/icaoberg/falcon/issues
 
@@ -16,17 +19,12 @@ halcon
 .. image:: https://badge.fury.io/py/halcon.svg
     :target: https://badge.fury.io/py/halcon
 
-.. image:: https://img.shields.io/twitter/url/https/github.com/icaoberg/falcon.svg?style=social
-   :target: https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D
-
-
 
 halcon (falcon in Spanish) is a python implementation of the Feedback Adaptive Loop for
 Content-Based Retrieval (FALCON) algorithm as described in
 
 -  Leejay Wu, Christos Faloutsos, Katia P. Sycara, and Terry R. Payne.
-   2000. FALCON: Feedback Adaptive Loop for Content-Based Retrieval. In
-   Proceedings of the 26th International Conference on Very Large Data
+   2000. `FALCON: Feedback Adaptive Loop for Content-Based Retrieval <http://www.cs.cmu.edu/~christos/PUBLICATIONS/vldb2k-falcon.pdf>`_. In Proceedings of the 26th International Conference on Very Large Data
    Bases (VLDB '00), Amr El Abbadi, Michael L. Brodie, Sharma
    Chakravarthy, Umeshwar Dayal, Nabil Kamel, Gunter Schlageter, and
    Kyu-Young Whang (Eds.). Morgan Kaufmann Publishers Inc., San
@@ -38,34 +36,37 @@ provides weights for positive examples; our system 'learns' the implied
 concept and returns similar objects."
 
 Development branch status
-~~~~~~~~~~~~~~~~~~~~~~~~~
+*************************
 
 .. image:: https://travis-ci.org/icaoberg/falcon.svg?branch=master
    :target: https://travis-ci.org/icaoberg/falcon
 
 Master branch status
-~~~~~~~~~~~~~~~~~~~~
+********************
 
 .. image:: https://travis-ci.org/icaoberg/falcon.svg?branch=master
    :target: https://travis-ci.org/icaoberg/falcon
 
+***************
 Pre-Requisites
-==============
+***************
 
 -  numpy
 -  scipy
+-  `mpmath <http://mpmath.org/>`_
 
-To install the prerequisites in Ubuntu 12.04
+To install the prerequisites in Ubuntu
 
 ::
 
     sudo apt-get install update
     sudo apt-get install python-numpy python-scipy
+    sudo easy_install pip
+    sudo pip install mpmath
 
-
-
+***************
 Installation
-============
+***************
 
 There are several ways to install halcon. The most common way is to
 download the source code, unzip/untar the source code package and run
@@ -88,29 +89,49 @@ and MacOSX is not a trivial task. For more information refer to the
 documentation.
 
 
-If you wish to install halcon in a virtual enviroment, then you can do
+If you wish to install halcon in a virtual enviroment from source code, then you can do
 
 ::
 
-    virtualenv halcon
-    cd halcon
-    source ./bin/activate
-    pip install numpy
-    pip install scipy
-    mkdir src
-    cd src
-    git clone git@github.com:icaoberg/halcon.git
-    cd halcon
-    python setup.py install
-    cd ../../
-    deactivate
+  virtualenv halcon
+  cd falcon
+  source ./bin/activate
+  pip install numpy
+  pip install scipy
+  pip install npmath
+
+  mkdir src
+  cd src
+  git clone git@github.com:icaoberg/falcon.git
+  cd falcon
+  python setup.py install
+
+  cd ../../
+  deactivate
+
+
+If you wish to install halcon in a virtual enviroment from [PyPI](https://pypi.python.org/pypi/halcon), then you can do
+
+::
+
+  virtualenv halcon
+  cd falcon
+  source ./bin/activate
+
+  pip install numpy
+  pip install scipy
+  pip install npmath
+  pip install halcon
+
+  deactivate
 
 **COMMENT**: The previous snippet assumes that you have
 `virtualenv <https://pypi.python.org/pypi/virtualenv>`__ installed in
 your working system.
 
+***************
 Usage
-=====
+***************
 
 There is only one method that you need to know about
 
@@ -129,10 +150,11 @@ Here is a brief description of each of the input arguments
 For example in ``wine.py``, I download a CSV file where the first
 ``feature_vector`` looks like this
 
-``[1,14.23,1.71,2.43,15.6,127,2.8,3.06,.28,2.29,5.64,1.04,3.92,1065]``
+::
+
+   [1,14.23,1.71,2.43,15.6,127,2.8,3.06,.28,2.29,5.64,1.04,3.92,1065]
 
 and then I modify it like this
-
 
 
 ::
@@ -173,11 +195,9 @@ you might find useful, like `OpenCV <http://opencv.org/>`__,
    about the calculation as they happen.
 
 
-
-
-
+***************
 Examples
-========
+***************
 
 For convenience and testing I included some examples. These examples
 download some datasets from the web and use them to trigger a query. The
@@ -214,7 +234,7 @@ commands assume you have virtualenv available.
     python examples/iris.py
 
 iris.py
-~~~~~~~
+^^^^^^^
 
 ::
 
@@ -258,7 +278,7 @@ iris.py
     If so, then SCORE! It seems to work.
 
 wine.py
-~~~~~~~
+^^^^^^^
 
 ::
 
@@ -294,142 +314,27 @@ wine.py
            18  wine31        0.288536
            19  wine56        0.291853
 
-metrics.py
-~~~~~~~~~~
 
-::
+human_protein_atlas.ipynb
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    $ python examples/metrics.py
-    This example uses the wine dataset from
-    Machine Learning Repository
-    Center for Machine Learning and Intelligent Systems
-    http://archive.ics.uci.edu/ml/datasets/Wine
-    This example uses this dataset to compare the different metrics available in halcon
+I have included a Jupyter notebook that shows an example using `Subcellular Location Features <http://murphylab.web.cmu.edu/services/SLF/features.html>`_ on some images from the `Human Protein Atlas <http://www.proteinatlas.org/>`_.
 
-      Ranking  Euclidean    City Block    Hamming
-    ---------  -----------  ------------  ---------
-            0  wine1        wine1         wine1
-            1  wine21       wine21        wine5
-            2  wine57       wine57        wine47
-            3  wine41       wine23        wine3
-            4  wine23       wine30        wine9
-            5  wine30       wine41        wine17
-            6  wine45       wine49        wine25
-            7  wine10       wine55        wine30
-            8  wine48       wine9         wine36
-            9  wine7        wine7         wine39
-           10  wine36       wine36        wine41
-           11  wine55       wine10        wine45
-           12  wine56       wine45        wine52
-           13  wine52       wine56        wine2
-           14  wine3        wine48        wine4
-           15  wine43       wine47        wine6
-           16  wine9        wine52        wine7
-           17  wine49       wine3         wine8
-           18  wine29       wine17        wine10
-           19  wine8        wine8         wine11
+Using the query image
 
-COMMENT: Hamming distance is meant for comparing strings so this example does not make a lot of sense since these features do not represent characters. These are not meant to be conclusions, rather, these are observations.
+.. image:: https://raw.githubusercontent.com/icaoberg/falcon/master/images/100_A12_1_blue_green.jpg
+  :height: 250px
 
+we queried the content database and determined the most similar image is
 
-random_feature_vectors.py
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. image:: https://raw.githubusercontent.com/icaoberg/falcon/master/images/100_B12_2_blue_green.jpg
+  :height: 250px
 
-::
+Do you think they look similar?
 
-    $ python examples/random_feature_vectors.py
-    Generating random query image
-    Query image name: img
-    Elapsed time: 7.39097595215e-05 seconds
-    Generating random dataset
-    Elapsed time: 0.00141191482544 seconds
-    Querying with one image
-    Elapsed time: 0.0233750343323 seconds
-    Top Ten Results!
-      Ranking  Identifier          Score
-    ---------  ------------  -----------
-            0  img           0
-            1  8             1.30582e+14
-            2  85            2.70987e+14
-            3  25            3.68567e+14
-            4  97            6.19091e+14
-            5  11            6.54178e+14
-            6  70            6.55048e+14
-            7  91            6.89901e+14
-            8  79            7.17429e+14
-
-
-number_of_feature_vectors_performance-euclidean_distance.py
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-    $ python examples/number_of_feature_vectors_performance-euclidean_distance.py
-    Generating and querying on synthetic datasets, please wait...
-
-    These are the results from this test
-      Number of Feature Vectors    Time (in seconds)
-    ---------------------------  -------------------
-                            100            0.0247221
-                            200            0.0378191
-                            300            0.0665781
-                            400            0.0999439
-                            500            0.123964
-                            600            0.120883
-                            700            0.138576
-                            800            0.176096
-                            900            0.180116
-
-    There is a clear trend that is dependent on the number of feature vectors.
-    You know what? Why don't we try making a pretty plot as well
-
-.. image:: https://raw.githubusercontent.com/icaoberg/falcon/master/images/number_of_feature_vectors_performance-euclidean_distance.png
-
-COMMENT: the examples are not seeded so you might get different results. These are not meant to be conclusions, rather, these are observations.
-
-
-
-number_of_features_performance-euclidean_distance.py
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-    $ python examples/number_of_features_performance-euclidean_distance.py
-    Generating and querying on synthetic datasets, please wait...                   ]
-
-    These are the results from this test
-
-      Number of Features    Time (in seconds)
-    --------------------  -------------------
-                      50            0.0666399
-                     100            0.0619891
-                     150            0.0683651
-                     200            0.0779331
-                     250            0.077204
-                     300            0.0829229
-                     350            0.087312
-                     400            0.092144
-                     450            0.09745
-                     500            0.111081
-                     550            0.112051
-                     600            0.11652
-                     650            0.119202
-                     700            0.123624
-                     750            0.127126
-                     800            0.134157
-                     850            0.138586
-                     900            0.149411
-                     950            0.14823
-
-    There seems to be trend that is dependent on the number of feature vectors.
-    You know what? Why don't we try making a pretty plot as well
-
-.. image:: https://raw.githubusercontent.com/icaoberg/falcon/dev/images/number_of_feature_performance-euclidean_distance.png
-
-COMMENT: the examples are not seeded so you might get different results. These are not meant to be conclusions, rather, these are observations.
-
+**************
 Documentation
-=============
+**************
 
 Documentation was written using `Sphinx <http://sphinx-doc.org/>`__. To
 generate documentation use the following commands.
@@ -455,16 +360,16 @@ To generate epub document
     cd docs
     make epub
 
-
+*********************
 Bugs and Questions
-==================
+*********************
 
 To submit bugs about the source code visit
 
-https://github.com/icaoberg/halcon
+* https://github.com/icaoberg/halcon
 
 To submit bugs about the documentation visit
 
-https://github.com/icaoberg/halcon-docs
+* https://github.com/icaoberg/halcon-docs
 
 For any other inquiries visit those links as well.
