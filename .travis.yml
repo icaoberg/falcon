@@ -5,6 +5,9 @@ python:
 virtualenv:
     system_site_packages: true
 
+git:
+    submodules: false
+
 # whitelist
 branches:
   only:
@@ -13,7 +16,6 @@ branches:
 
 before_install:
     - echo "before_install"
-    - echo $VIRTUAL_ENV
     - df -h
     - date
     - pwd
