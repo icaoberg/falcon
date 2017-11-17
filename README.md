@@ -7,6 +7,7 @@ halcon
 [![GitHub stars](https://img.shields.io/github/stars/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/stargazers)
 [![PyPI version](https://badge.fury.io/py/halcon.svg)](https://badge.fury.io/py/halcon)
 [![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://raw.githubusercontent.com/icaoberg/falcon/master/LICENSE)
+[![Coverage Status](https://coveralls.io/repos/github/icaoberg/falcon/badge.svg?branch=master)](https://coveralls.io/github/icaoberg/falcon?branch=master)
 
 halcon is a python implementation of the Feedback Adaptive Loop for Content-Based Retrieval (FALCON) algorithm as described in
 
