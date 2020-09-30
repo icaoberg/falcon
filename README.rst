@@ -21,10 +21,10 @@ halcon
 
 
 halcon (falcon in Spanish) is a python implementation of the Feedback Adaptive Loop for
-Content-Based Retrieval (FALCON) algorithm as described in
+Content-Based Retrieval(FALCON) algorithm as described in :-
 
 -  Leejay Wu, Christos Faloutsos, Katia P. Sycara, and Terry R. Payne.
-   2000. `FALCON: Feedback Adaptive Loop for Content-Based Retrieval <http://www.cs.cmu.edu/~christos/PUBLICATIONS/vldb2k-falcon.pdf>`_. In Proceedings of the 26th International Conference on Very Large Data
+   2000. `FALCON: Feedback Adaptive Loop for Content-Based Retrieval <http://www.cs.cmu.edu/~christos/PUBLICATIONS/vldb2k-falcon.pdf>`_. In Proceedings of the 26th International    Conference on Very Large Data
    Bases (VLDB '00), Amr El Abbadi, Michael L. Brodie, Sharma
    Chakravarthy, Umeshwar Dayal, Nabil Kamel, Gunter Schlageter, and
    Kyu-Young Whang (Eds.). Morgan Kaufmann Publishers Inc., San
