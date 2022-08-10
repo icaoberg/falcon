@@ -1,4 +1,4 @@
-# Copyright (C) 2014 Ivan E. Cao-Berg
+# Copyright (C) 2014-2022 Ivan E. Cao-Berg
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published
@@ -57,12 +57,12 @@ def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zsc
     for candidate in candidates:
         iids.append(candidate[0])
         if debug:
-            print "Analyzing candidate: " + candidate[0]
+            print("Analyzing candidate: " + candidate[0])
 
         candidate_distance = big_distance(alpha, candidate,
             good_set, metric=metric, debug=debug)
         if debug:
-            print "Candidate distance: " + str(candidate_distance)
+            print("Candidate distance: " + str(candidate_distance))
 
         if candidate_distance != 'NaN':
             ratings.append(candidate_distance)
@@ -131,7 +131,7 @@ def big_distance(alpha, candidate, good_set, weighted=True,
         total_distance = total_distance**mpf(1.0/1.0*alpha)
     except:
         if debug:
-            print 'Unable to calculate big distance'
+            print('Unable to calculate big distance')
         total_distance = 'NaN'
 
     return total_distance
@@ -167,7 +167,7 @@ def distance(vector1, vector2, alpha=2, metric='euclidean' ):
     elif metric == 'hamming':
         vector_norm = distances.hamming( vector1, vector2 )
     else:
-        print "Unknown metric"
+        print("Unknown metric")
         return None
 
     return vector_norm

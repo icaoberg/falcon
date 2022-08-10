@@ -1,21 +1,26 @@
-import urllib
+import urllib3
 from numpy import genfromtxt
 from os import remove
-import halcon
+from halcon import search
+import shutil
 from time import time
 from sys import exit
 
-print '''
+print('''
 This example uses the iris dataset from
 
 Machine Learning Repository
 Center for Machine Learning and Intelligent Systems
 http://archive.ics.uci.edu/ml/datasets/Iris
-'''
+''')
 
 url = 'http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
 filename = 'iris.csv'
-urllib.urlretrieve( url, filename )
+
+http = urllib3.PoolManager()
+with open(filename, 'wb') as out:
+    r = http.request('GET', url, preload_content=False)
+    shutil.copyfileobj(r, out)
 
 infile = open(filename)
 outfile = open('iris2.csv', 'w' )
@@ -33,26 +38,26 @@ remove( filename )
 filename = 'iris2.csv'
 data = genfromtxt( filename, delimiter=',' )
 
-print "I will use the first feature vector as my query image"
+print("I will use the first feature vector as my query image")
 query_image = [[ 0, 1, data[0]]]
-print query_image
+print(query_image)
 
-print "\nAnd I will use the rest of the feature vectors to find the most similar images"
+print("\nAnd I will use the rest of the feature vectors to find the most similar images")
 dataset = []
 counter = 1
 for datum in data:
 	dataset.append([counter, 1, datum ])
 	counter = counter + 1
 
-print "\nNow notice that feature vector with iid1 has the same values iid0"
-print dataset[0]
+print("\nNow notice that feature vector with iid1 has the same values iid0")
+print(dataset[0])
 
-print "\nSo I expect that if FALCON is working correctly, then iid1 should be the top hit!"
+print("\nSo I expect that if FALCON is working correctly, then iid1 should be the top hit!")
 
 t = time()
-[iids, scores] = halcon.search.query( query_image, dataset, normalization='standard' )
+[iids, scores] = search.query( query_image, dataset, normalization='standard' )
 t = time() - t
-print "Elapsed time: " + str(t) + " seconds\n"
+print("Elapsed time: " + str(t) + " seconds\n")
 
 #icaoberg: i will only display the top ten results
 iids = iids[0:20]
@@ -77,17 +82,17 @@ try:
 		table.append([str(rank), str(iids[index]), iclass, str(scores[index])])
 		rank = rank + 1
 
-	print tabulate(table, headers=["Ranking","Identifier", "Class", "Score"])
+	print(tabulate(table, headers=["Ranking","Identifier", "Class", "Score"]))
 except:
-	print "rank\tiid\t\tscore"
+	print("rank\tiid\t\tscore")
 
 	rank = 0
 	for iid, score in zip(iids,scores):
-		print str(rank) + "\t" + str(iid) + "\t\t" + str(score)
+		print(str(rank) + "\t" + str(iid) + "\t\t" + str(score))
 		rank = rank + 1
 
-print "\nDo the top results in the list above belong to the same class as the query image?"
-print "If so, then SCORE! It seems to work."
+print("\nDo the top results in the list above belong to the same class as the query image?")
+print("If so, then SCORE! It seems to work.")
 
 remove(filename)
 
