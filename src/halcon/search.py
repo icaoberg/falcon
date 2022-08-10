@@ -19,6 +19,7 @@ import numpy
 import scipy.spatial.distance as distances
 from mpmath import *
 from operator import itemgetter
+import logging
 
 def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zscore', debug=False):
     '''
@@ -57,12 +58,12 @@ def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zsc
     for candidate in candidates:
         iids.append(candidate[0])
         if debug:
-            print("Analyzing candidate: " + candidate[0])
+            logging.debug("Analyzing candidate: " + candidate[0])
 
         candidate_distance = big_distance(alpha, candidate,
             good_set, metric=metric, debug=debug)
         if debug:
-            print("Candidate distance: " + str(candidate_distance))
+            logging.debug("Candidate distance: " + str(candidate_distance))
 
         if candidate_distance != 'NaN':
             ratings.append(candidate_distance)
@@ -131,12 +132,13 @@ def big_distance(alpha, candidate, good_set, weighted=True,
         total_distance = total_distance**mpf(1.0/1.0*alpha)
     except:
         if debug:
-            print('Unable to calculate big distance')
+            logging.debug('Unable to calculate big distance')
         total_distance = 'NaN'
 
     return total_distance
 
-def distance(vector1, vector2, alpha=2, metric='euclidean' ):
+
+def distance(vector1, vector2, alpha=2, metric='euclidean'):
     '''
     Helper function that calculates the alpha
 
@@ -155,7 +157,7 @@ def distance(vector1, vector2, alpha=2, metric='euclidean' ):
     vector2 = matrix(numpy.array(vector2))
 
     if metric == 'euclidean':
-        vector_norm = distances.euclidean( vector1, vector2 )
+        vector_norm = distances.euclidean(vector1, vector2)
     elif metric == 'mahalanobis':
         vi = numpy.linalg.inv( numpy.cov(
             numpy.concatenate((vector1, vector2)).T))
@@ -167,7 +169,7 @@ def distance(vector1, vector2, alpha=2, metric='euclidean' ):
     elif metric == 'hamming':
         vector_norm = distances.hamming( vector1, vector2 )
     else:
-        print("Unknown metric")
+        logging.warning("Unknown metric.")
         return None
 
     return vector_norm

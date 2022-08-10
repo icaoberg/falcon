@@ -33,55 +33,17 @@ Installation
 There are several ways to install halcon. The most common way is to download the source code, unzip/untar the source code package and run the command
 
 ```
-sudo python setup.py install
+python3 setup.py install
 ```
 
 I have plans of submitting this package to the Python Package Index.
 If I do so, then should be able to install it by running the command
 
 ```
-sudo pip install halcon
+pip3 install --user halcon
 ```
 
 **COMMENT**: halcon depends on [numpy](http://www.numpy.org) and [scipy](http://www.scipy.org). Installing these packages in Windows and MacOSX is not a trivial task. For more information refer to the documentation.
-
-If you wish to install halcon in a virtual enviroment from source code, then you can do
-
-```
-virtualenv halcon
-cd falcon
-source ./bin/activate
-pip install numpy
-pip install scipy
-pip install npmath
-
-mkdir src
-cd src
-git clone git@github.com:icaoberg/falcon.git
-cd falcon
-python setup.py install
-
-cd ../../
-deactivate
-```
-
-
-If you wish to install halcon in a virtual enviroment from [PyPI](https://pypi.python.org/pypi/halcon), then you can do
-
-```
-virtualenv halcon
-cd falcon
-source ./bin/activate
-
-pip install numpy
-pip install scipy
-pip install npmath
-pip install halcon
-
-deactivate
-```
-
-**COMMENT**: The previous snippet assumes that you have [virtualenv](https://pypi.python.org/pypi/virtualenv) installed in your working system.
 
 Usage
 -----

@@ -1,4 +1,4 @@
-# Copyright (C) 2014 Ivan E. Cao-Berg
+# Copyright (C) 2014-2022 Ivan E. Cao-Berg
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published
@@ -19,7 +19,7 @@ import os
 from setuptools import setup
 
 #load the current version number of the package
-exec(compile(open('VERSION').read(), 'VERSION', 'exec'))
+exec(compile(open('../VERSION').read(), 'VERSION', 'exec'))
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
