@@ -76,18 +76,24 @@ Here is a brief description of each of the input arguments
 ### iris.py
 
 ```
-$ python examples/iris.py
-This example uses the iris dataset from
+> python3 examples/iris.py 
+
+This example uses the Iris dataset from
+
 Machine Learning Repository
 Center for Machine Learning and Intelligent Systems
 http://archive.ics.uci.edu/ml/datasets/Iris
+
 I will use the first feature vector as my query image
-[[0, 1, array([ 5.1,  3.5,  1.4,  0.2,  1. ])]]
+[[0, 1, array([5.1, 3.5, 1.4, 0.2, 1. ])]]
+
 And I will use the rest of the feature vectors to find the most similar images
+
 Now notice that feature vector with iid1 has the same values iid0
-[1, 1, array([ 5.1,  3.5,  1.4,  0.2,  1. ])]
+[1, 1, array([5.1, 3.5, 1.4, 0.2, 1. ])]
+
 So I expect that if FALCON is working correctly, then iid1 should be the top hit!
-Elapsed time: 0.0221660137177 seconds
+Elapsed time: 0.03953266143798828 seconds
 
   Ranking    Identifier  Class                  Score
 ---------  ------------  ---------------  -----------
@@ -111,6 +117,7 @@ Elapsed time: 0.0221660137177 seconds
        17            20  Iris-setosa      4.23544e-28
        18            25  Iris-setosa      1.67453e-27
        19             3  Iris-setosa      2.40919e-27
+
 Do the top results in the list above belong to the same class as the query image?
 If so, then SCORE! It seems to work.
 ```
@@ -118,14 +125,18 @@ If so, then SCORE! It seems to work.
 ### wine.py
 
 ```
-$ python examples/wine.py
+> python3 examples/wine.py 
+
 This example uses the wine dataset from
+
 Machine Learning Repository
 Center for Machine Learning and Intelligent Systems
 http://archive.ics.uci.edu/ml/datasets/Wine
+
 I will use the first three feature vectors as my query wine set
+
 And I will use the rest of the feature vectors to find the most similar images
-Elapsed time: 0.0280928611755 seconds
+Elapsed time: 0.1414961814880371 seconds
 
   Ranking  Identifier          Score
 ---------  ------------  -----------
@@ -139,16 +150,6 @@ Elapsed time: 0.0280928611755 seconds
         7  wine57        0.00456123
         8  wine36        0.0152067
         9  wine39        0.0197516
-       10  wine58        0.0243848
-       11  wine9         0.024467
-       12  wine55        0.045762
-       13  wine24        0.046893
-       14  wine7         0.113906
-       15  wine45        0.188355
-       16  wine27        0.201802
-       17  wine41        0.206469
-       18  wine31        0.288536
-       19  wine56        0.291853
 ```
 
 ## Bugs and Questions
