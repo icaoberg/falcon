@@ -5,6 +5,7 @@ from os import remove
 from halcon import search
 from time import time
 from sys import exit
+from tabulate import tabulate
 
 print('''
 This example uses the wine dataset from
@@ -38,36 +39,23 @@ for datum in data:
 	counter = counter + 1
 
 t = time()
-[iids, scores] = search.query( query_wines, dataset, metric='cityblock', normalization='standard' )
+[iids, scores] = search.query( query_wines, dataset, metric='cityblock', normalization='zscore' )
+iids = iids[0:50]
+scores = scores[0:50]
 t = time() - t
 print("Elapsed time: " + str(t) + " seconds\n")
 
-#icaoberg: i will only display the top ten results
-iids = iids[0:10]
-scores = scores[0:10]
+rank = 0
+table = []
 
-#icaoberg: just in case people do not have the tabulate package
-try:
-	from tabulate import tabulate
-	rank = 0
-	table = []
+for index in range(len(iids)):
+	table.append([str(rank), str(iids[index]), str(scores[index])])
+	rank = rank + 1
 
-	for index in range(len(iids)):
-		table.append([str(rank), str(iids[index]), str(scores[index])])
-		rank = rank + 1
-
-	print(tabulate(table, headers=["Ranking","Identifier", "Score"]))
-except:
-	print("rank\tiid\t\tscore")
-
-	rank = 0
-	for iid, score in zip(iids,scores):
-		print(str(rank) + "\t" + str(iid) + "\t\t" + str(score))
-		rank = rank + 1
+print(tabulate(table, headers=["Ranking","Identifier", "Score"], tablefmt='github'))
 
 remove(filename)
 
-#icaoberg: this line is neccesary so i can test this example in travis/jenkins
 if iids[0] == 'wine1':
  	exit(0)
 else:

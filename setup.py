@@ -24,28 +24,29 @@ exec(compile(open('VERSION').read(), 'VERSION', 'exec'))
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
-
-
 setup(name = 'halcon',
       version = __version__,
       description = ('Python implementation of FALCON: '
       	'Feedback Adaptive Loop for Content-Based Retrieval'),
-      long_description=read('README.rst'),
+      long_description=read('README.md'),
+      long_description_content_type="text/markdown",
       author = 'Ivan E. Cao-Berg',
       author_email = 'icaoberg@alumni.cmu.edu',
       install_requires=[
-      	'numpy',
-      	'scipy',
-        'mpmath'],
+            'numpy',
+            'scipy',
+            'mpmath'],
       url = 'https://github.com/icaoberg/falcon',
       classifiers=[
-      	'Programming Language :: Python',
+      	'Programming Language :: Python :: 3',
       	'Intended Audience :: Science/Research',
             'Intended Audience :: Developers',
             'Intended Audience :: Information Technology',
             'Topic :: Scientific/Engineering :: Bio-Informatics',
             'Topic :: Scientific/Engineering :: Information Analysis',
-            'Topic :: Scientific/Engineering :: Mathematics',
             'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
+            'Operating System :: OS Independent',
             'Development Status :: 4 - Beta'],
-      py_modules=['halcon.search'])
+      py_modules=['halcon.search'], 
+      python_requires='>=3.6'
+)
