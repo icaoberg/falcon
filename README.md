@@ -1,5 +1,4 @@
-halcon
-======
+# halcon
 
 [![Build Status](https://travis-ci.org/icaoberg/falcon.svg?branch=dev)](https://travis-ci.org/icaoberg/falcon)
 [![Build Status](https://travis-ci.org/icaoberg/falcon.svg?branch=master)](https://travis-ci.org/icaoberg/falcon)
@@ -17,14 +16,12 @@ halcon is a python implementation of the Feedback Adaptive Loop for Content-Base
 FALCON is, as described in the article abstract, "a novel method that is designed to handle disjunctive queries within metric spaces. The user provides weights for positive examples; our system 'learns' the implied concept and returns similar objects."
 
 
-Pre-Requisites
---------------
+## Pre-Requisites
 - [numpy](http://www.numpy.org/)
 - [scipy](http://www.scipy.org/)
 - [mpmath](http://mpmath.org/)
 
-Installation
-============
+## Installation
 
 To install `halcon` run
 
@@ -32,8 +29,7 @@ To install `halcon` run
 pip3 install --user halcon
 ```
 
-Usage
------
+## Usage
 There is only one method that you need to know about
 
 ```
@@ -69,7 +65,6 @@ Here is a brief description of each of the input arguments
   
     * [OpenCV](http://opencv.org/)
     * [mahotas](https://pypi.python.org/pypi/mahotas)
-    * [SLIC](http://lanec1web1.compbio.cs.cmu.edu/release/).
 
 * ```alpha```. For more information about alpha, please refer to the article. The recommended value by the paper is -5, which is the default value used in this package.
 
@@ -79,8 +74,7 @@ Here is a brief description of each of the input arguments
 
 * ```debug```. If debug flag is on, then it should print more information about the calculation as they happen.
 
-Examples
---------
+## Examples
 For convenience and testing I included some examples. These examples download some
 datasets from the web and use them to trigger a query. The only exception is the random feature vectors example. For example, to run the ```iris``` example simply run in terminal
 
@@ -236,8 +230,7 @@ we queried the content database and determined the most similar image is
 
 Do you think they look similar?
 
-Documentation
--------------
+## Documentation
 Documentation was written using [Sphinx](http://sphinx-doc.org/).
  To generate documentation use the following commands.
 
@@ -259,14 +252,13 @@ cd docs
 make epub
 ```
 
-Bugs and Questions
-------------------
+## Bugs and Questions
 To submit bugs about the source code visit
 
-https://github.com/icaoberg/falcon
+* https://github.com/icaoberg/falcon
 
 To submit bugs about the documentation visit
 
-https://github.com/icaoberg/falcon-docs
+* https://github.com/icaoberg/falcon-docs
 
 For any other inquiries visit those links as well.

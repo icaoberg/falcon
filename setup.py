@@ -16,13 +16,15 @@
 # 02110-1301, USA.
 
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 #load the current version number of the package
-exec(compile(open('../VERSION').read(), 'VERSION', 'exec'))
+exec(compile(open('VERSION').read(), 'VERSION', 'exec'))
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
+
 
 setup(name = 'halcon',
       version = __version__,
