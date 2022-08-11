@@ -1,7 +1,5 @@
 # halcon
-
-[![Build Status](https://travis-ci.org/icaoberg/falcon.svg?branch=dev)](https://travis-ci.org/icaoberg/falcon)
-[![Build Status](https://travis-ci.org/icaoberg/falcon.svg?branch=master)](https://travis-ci.org/icaoberg/falcon)
+![Status](https://github.com/icaoberg/falcon/actions/workflows/main.yml/badge.svg)
 [![GitHub issues](https://img.shields.io/github/issues/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/issues)
 [![GitHub forks](https://img.shields.io/github/forks/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/network)
 [![GitHub stars](https://img.shields.io/github/stars/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/stargazers)
@@ -9,7 +7,7 @@
 [![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://raw.githubusercontent.com/icaoberg/falcon/master/LICENSE)
 [![Coverage Status](https://coveralls.io/repos/github/icaoberg/falcon/badge.svg?branch=master)](https://coveralls.io/github/icaoberg/falcon?branch=master)
 
-halcon is a python implementation of the Feedback Adaptive Loop for Content-Based Retrieval (FALCON) algorithm as described in
+`halcon` is a python implementation of the Feedback Adaptive Loop for Content-Based Retrieval (FALCON) algorithm as described in
 
 * Leejay Wu, Christos Faloutsos, Katia P. Sycara, and Terry R. Payne. 2000. [FALCON: Feedback Adaptive Loop for Content-Based Retrieval](http://www.cs.cmu.edu/~christos/PUBLICATIONS/vldb2k-falcon.pdf). In Proceedings of the 26th International Conference on Very Large Data Bases (VLDB '00), Amr El Abbadi, Michael L. Brodie, Sharma Chakravarthy, Umeshwar Dayal, Nabil Kamel, Gunter Schlageter, and Kyu-Young Whang (Eds.). Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 297-306.
 
