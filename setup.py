@@ -48,5 +48,6 @@ setup(name = 'halcon',
             'Operating System :: OS Independent',
             'Development Status :: 4 - Beta'],
       py_modules=['halcon.search'], 
-      python_requires='>=3.6'
+      python_requires='>=3.6',
+      tests_require=["nose"]
 )
