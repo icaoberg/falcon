@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pytest pytest-md pytest-emoji tabulate urllib3 numpy scipy mpmath
-          find . -type f 
+          python setup.py install
           pytest tests/*.py
       - uses: pavelzw/pytest-action@v2
         with:
