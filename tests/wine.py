@@ -8,7 +8,7 @@ from sys import exit
 from tabulate import tabulate
 
 print('''
-This example uses the wine dataset from
+This example uses the Wine dataset from
 
 Machine Learning Repository
 Center for Machine Learning and Intelligent Systems
