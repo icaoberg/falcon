@@ -19,9 +19,11 @@ url = 'http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data'
 filename = 'data.csv'
 urllib.urlretrieve( url, filename )
 data = genfromtxt( filename, delimiter=',' )
-
 query_wines = []
-query_wines.append(['wine0', 1, data[0]])
+
+
+query_wines.append( ['wine0', 1, data[0]] )
+
 
 #metrics
 metrics = ['euclidean','cityblock','hamming']

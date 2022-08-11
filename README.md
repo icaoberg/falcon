@@ -1,7 +1,5 @@
-halcon
-======
-
-![Big Data](https://img.shields.io/badge/big%20data-true-blue.svg)
+# halcon
+![Status](https://github.com/icaoberg/falcon/actions/workflows/main.yml/badge.svg)
 [![GitHub issues](https://img.shields.io/github/issues/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/issues)
 [![GitHub forks](https://img.shields.io/github/forks/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/network)
 [![GitHub stars](https://img.shields.io/github/stars/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/stargazers)
@@ -9,82 +7,27 @@ halcon
 [![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://raw.githubusercontent.com/icaoberg/falcon/master/LICENSE)
 [![Coverage Status](https://coveralls.io/repos/github/icaoberg/falcon/badge.svg?branch=master)](https://coveralls.io/github/icaoberg/falcon?branch=master)
 
-halcon is a python implementation of the Feedback Adaptive Loop for Content-Based Retrieval (FALCON) algorithm as described in
+`halcon` is a python implementation of the Feedback Adaptive Loop for Content-Based Retrieval (FALCON) algorithm as described in
 
 * Leejay Wu, Christos Faloutsos, Katia P. Sycara, and Terry R. Payne. 2000. [FALCON: Feedback Adaptive Loop for Content-Based Retrieval](http://www.cs.cmu.edu/~christos/PUBLICATIONS/vldb2k-falcon.pdf). In Proceedings of the 26th International Conference on Very Large Data Bases (VLDB '00), Amr El Abbadi, Michael L. Brodie, Sharma Chakravarthy, Umeshwar Dayal, Nabil Kamel, Gunter Schlageter, and Kyu-Young Whang (Eds.). Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 297-306.
 
 FALCON is, as described in the article abstract, "a novel method that is designed to handle disjunctive queries within metric spaces. The user provides weights for positive examples; our system 'learns' the implied concept and returns similar objects."
 
-### Development branch status
-[![Build Status](https://travis-ci.org/icaoberg/falcon.svg?branch=dev)](https://travis-ci.org/icaoberg/falcon)
 
-### Master branch status
-[![Build Status](https://travis-ci.org/icaoberg/falcon.svg?branch=master)](https://travis-ci.org/icaoberg/falcon)
-
-Pre-Requisites
---------------
+## Pre-Requisites
 - [numpy](http://www.numpy.org/)
 - [scipy](http://www.scipy.org/)
 - [mpmath](http://mpmath.org/)
 
-Installation
-============
+## Installation
 
-There are several ways to install halcon. The most common way is to download the source code, unzip/untar the source code package and run the command
-
-```
-sudo python setup.py install
-```
-
-I have plans of submitting this package to the Python Package Index.
-If I do so, then should be able to install it by running the command
+To install `halcon` run
 
 ```
-sudo pip install halcon
+pip3 install --user halcon
 ```
 
-**COMMENT**: halcon depends on [numpy](http://www.numpy.org) and [scipy](http://www.scipy.org). Installing these packages in Windows and MacOSX is not a trivial task. For more information refer to the documentation.
-
-If you wish to install halcon in a virtual enviroment from source code, then you can do
-
-```
-virtualenv halcon
-cd falcon
-source ./bin/activate
-pip install numpy
-pip install scipy
-pip install npmath
-
-mkdir src
-cd src
-git clone git@github.com:icaoberg/falcon.git
-cd falcon
-python setup.py install
-
-cd ../../
-deactivate
-```
-
-
-If you wish to install halcon in a virtual enviroment from [PyPI](https://pypi.python.org/pypi/halcon), then you can do
-
-```
-virtualenv halcon
-cd falcon
-source ./bin/activate
-
-pip install numpy
-pip install scipy
-pip install npmath
-pip install halcon
-
-deactivate
-```
-
-**COMMENT**: The previous snippet assumes that you have [virtualenv](https://pypi.python.org/pypi/virtualenv) installed in your working system.
-
-Usage
------
+## Usage
 There is only one method that you need to know about
 
 ```
@@ -116,45 +59,20 @@ Here is a brief description of each of the input arguments
   good_set.append([identifier, initial_score, feature_vector])
   ```
 
-  For more information about the definition of the initial score, please refer to the article. In all my examples I use a initial score of 1, that is, all images have the same weight. The identifier should be unique (though not enforced), so you can tell images apart. This package assumes every object is represented by a [feature](http://en.wikipedia.org/wiki/Feature_(machine_learning)) vector. Feature calculation goes beyond the scope of this package. There are many feature calculation/machine learning packages out there that you might find useful, like [OpenCV](http://opencv.org/), [mahotas](https://pypi.python.org/pypi/mahotas) and [SLIC](http://lanec1web1.compbio.cs.cmu.edu/release/).
+  For more information about the definition of the initial score, please refer to the article. In all my examples I use a initial score of 1, that is, all images have the same weight. The identifier should be unique (though not enforced), so you can tell images apart. This package assumes every object is represented by a [feature](http://en.wikipedia.org/wiki/Feature_(machine_learning)) vector. Feature calculation and feature selection is beyond the scope of this package. There are many feature calculation/machine learning packages out there that you might find useful, like 
+  
+    * [OpenCV](http://opencv.org/)
+    * [mahotas](https://pypi.python.org/pypi/mahotas)
 
 * ```alpha```. For more information about alpha, please refer to the article. The recommended value by the paper is -5, which is the default value used in this package.
 
-* ```metric```. In the research article, a measure of distance ```d``` is used to calculate the distance between two feature vectors. The default value is ```euclidean``` (Euclidean distance) and other supported metrics are ```cityblock``` (Manhattan distance) and ```hamming``` (Hamming distance).
+* ```metric```. In the research article, a measure of distance ```d``` is used to calculate the distance between two feature vectors. The default value is ```euclidean``` (Euclidean distance) and other supported metrics are 1) ```cityblock``` (Manhattan distance) and 2) ```hamming``` (Hamming distance).
 
 * ```normalization```. Feature normalization option. Default is ```zscore```. Alternative option is ```standard```.
 
 * ```debug```. If debug flag is on, then it should print more information about the calculation as they happen.
 
-Examples
---------
-For convenience and testing I included some examples. These examples download some
-datasets from the web and use them to trigger a query. The only exception is the random feature vectors example. For example, to run the ```iris``` example simply run in terminal
-
-```
-python examples/iris.py
-```
-
-The examples have a dependency that the package does not, since I use [tabulate](https://pypi.python.org/pypi/tabulate) to pretty print the results from the examples.
-
-In my humble opinion, the best way to run the examples is using [virtualenv](https://pypi.python.org/pypi/virtualenv) -which is what I do for [travis](https://travis-ci.org/icaoberg/falcon)-. The next commands assume you have virtualenv available.
-
-```
-virtualenv halcon --system-site-packages
-. ./falcon/bin/activate
-cd falcon
-mkdir src
-cd src
-pip install numpy
-pip install scipy
-pip install tabulate
-git clone https://github.com/icaoberg/falcon.git
-cd falcon
-python setup.py install
-cd ..
-python examples/iris.py
-```
-
+## Examples
 ### iris.py
 
 ```
@@ -233,87 +151,13 @@ Elapsed time: 0.0280928611755 seconds
        19  wine56        0.291853
 ```
 
-### metrics.py
-
-```
-$ python examples/metrics.py
-This example uses the wine dataset from
-Machine Learning Repository
-Center for Machine Learning and Intelligent Systems
-http://archive.ics.uci.edu/ml/datasets/Wine
-This example uses this dataset to compare the different metrics available in FALCON
-
-  Ranking  Euclidean    City Block    Hamming
----------  -----------  ------------  ---------
-        0  wine1        wine1         wine1
-        1  wine21       wine21        wine5
-        2  wine57       wine57        wine47
-        3  wine41       wine23        wine3
-        4  wine23       wine30        wine9
-        5  wine30       wine41        wine17
-        6  wine45       wine49        wine25
-        7  wine10       wine55        wine30
-        8  wine48       wine9         wine36
-        9  wine7        wine7         wine39
-       10  wine36       wine36        wine41
-       11  wine55       wine10        wine45
-       12  wine56       wine45        wine52
-       13  wine52       wine56        wine2
-       14  wine3        wine48        wine4
-       15  wine43       wine47        wine6
-       16  wine9        wine52        wine7
-       17  wine49       wine3         wine8
-       18  wine29       wine17        wine10
-       19  wine8        wine8         wine11
-```
-
-COMMENT: Hamming distance is meant for comparing strings so this example does not make a lot of sense since these features do not represent characters.
-
-### human_protein_atlas.ipynb
-
-I have included a Jupyter notebook that shows an example using [Subcellular Location Features](http://murphylab.web.cmu.edu/services/SLF/features.html) on some images from the [Human Protein Atlas](http://www.proteinatlas.org/).
-
-Using the query image
-
-![100_A12_1_blue_green.jpg](images/100_A12_1_blue_green.jpg)
-
-we queried the content database and determined the most similar image is
-
-![100_B12_2_blue_green.jpg](images/100_B12_2_blue_green.jpg)
-
-Do you think they look similar?
-
-Documentation
--------------
-Documentation was written using [Sphinx](http://sphinx-doc.org/).
- To generate documentation use the following commands.
-
-To generate html
-```
-cd docs
-make html
-```
-
-To generate PDF document
-```
-cd docs
-make latexpdf
-```
-
-To generate epub document
-```
-cd docs
-make epub
-```
-
-Bugs and Questions
-------------------
+## Bugs and Questions
 To submit bugs about the source code visit
 
-https://github.com/icaoberg/falcon
+* https://github.com/icaoberg/falcon
 
 To submit bugs about the documentation visit
 
-https://github.com/icaoberg/falcon-docs
+* https://github.com/icaoberg/falcon-docs
 
 For any other inquiries visit those links as well.
