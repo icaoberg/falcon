@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pytest pytest-md pytest-emoji tabulate
-          pytest tests/*.y
+          pytest tests/*.py
       - uses: pavelzw/pytest-action@v2
         with:
           emoji: false
