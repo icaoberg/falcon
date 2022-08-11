@@ -1,6 +1,6 @@
 name: Run Python tests
 
-on: [push, pull]
+on: [push]
 
 jobs:
   build:
