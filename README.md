@@ -84,7 +84,6 @@ python examples/iris.py
 
 The examples have a dependency that the package does not, since I use [tabulate](https://pypi.python.org/pypi/tabulate) to pretty print the results from the examples.
 
-In my humble opinion, the best way to run the examples is using [virtualenv](https://pypi.python.org/pypi/virtualenv) -which is what I do for [travis](https://travis-ci.org/icaoberg/falcon)-. The next commands assume you have virtualenv available.
 
 ```
 virtualenv halcon --system-site-packages
