@@ -75,32 +75,6 @@ Here is a brief description of each of the input arguments
 * ```debug```. If debug flag is on, then it should print more information about the calculation as they happen.
 
 ## Examples
-For convenience and testing I included some examples. These examples download some
-datasets from the web and use them to trigger a query. The only exception is the random feature vectors example. For example, to run the ```iris``` example simply run in terminal
-
-```
-python examples/iris.py
-```
-
-The examples have a dependency that the package does not, since I use [tabulate](https://pypi.python.org/pypi/tabulate) to pretty print the results from the examples.
-
-
-```
-virtualenv halcon --system-site-packages
-. ./falcon/bin/activate
-cd falcon
-mkdir src
-cd src
-pip install numpy
-pip install scipy
-pip install tabulate
-git clone https://github.com/icaoberg/falcon.git
-cd falcon
-python setup.py install
-cd ..
-python examples/iris.py
-```
-
 ### iris.py
 
 ```
@@ -177,78 +151,6 @@ Elapsed time: 0.0280928611755 seconds
        17  wine41        0.206469
        18  wine31        0.288536
        19  wine56        0.291853
-```
-
-### metrics.py
-
-```
-$ python examples/metrics.py
-This example uses the wine dataset from
-Machine Learning Repository
-Center for Machine Learning and Intelligent Systems
-http://archive.ics.uci.edu/ml/datasets/Wine
-This example uses this dataset to compare the different metrics available in FALCON
-
-  Ranking  Euclidean    City Block    Hamming
----------  -----------  ------------  ---------
-        0  wine1        wine1         wine1
-        1  wine21       wine21        wine5
-        2  wine57       wine57        wine47
-        3  wine41       wine23        wine3
-        4  wine23       wine30        wine9
-        5  wine30       wine41        wine17
-        6  wine45       wine49        wine25
-        7  wine10       wine55        wine30
-        8  wine48       wine9         wine36
-        9  wine7        wine7         wine39
-       10  wine36       wine36        wine41
-       11  wine55       wine10        wine45
-       12  wine56       wine45        wine52
-       13  wine52       wine56        wine2
-       14  wine3        wine48        wine4
-       15  wine43       wine47        wine6
-       16  wine9        wine52        wine7
-       17  wine49       wine3         wine8
-       18  wine29       wine17        wine10
-       19  wine8        wine8         wine11
-```
-
-COMMENT: Hamming distance is meant for comparing strings so this example does not make a lot of sense since these features do not represent characters.
-
-### human_protein_atlas.ipynb
-
-I have included a Jupyter notebook that shows an example using [Subcellular Location Features](http://murphylab.web.cmu.edu/services/SLF/features.html) on some images from the [Human Protein Atlas](http://www.proteinatlas.org/).
-
-Using the query image
-
-![100_A12_1_blue_green.jpg](images/100_A12_1_blue_green.jpg)
-
-we queried the content database and determined the most similar image is
-
-![100_B12_2_blue_green.jpg](images/100_B12_2_blue_green.jpg)
-
-Do you think they look similar?
-
-## Documentation
-Documentation was written using [Sphinx](http://sphinx-doc.org/).
- To generate documentation use the following commands.
-
-To generate html
-```
-cd docs
-make html
-```
-
-To generate PDF document
-```
-cd docs
-make latexpdf
-```
-
-To generate epub document
-```
-cd docs
-make epub
 ```
 
 ## Bugs and Questions

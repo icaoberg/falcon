@@ -36,7 +36,11 @@ setup(name = 'halcon',
             'numpy',
             'scipy',
             'mpmath'],
-      url = 'https://github.com/icaoberg/falcon',
+      project_urls={
+        'Bug Tracker': 'https://github.com/icaoberg/falcon',
+        'Documentation': 'https://github.com/icaoberg/falcon-docs',
+        'Source Code': 'https://github.com/icaoberg/falcon',
+      },    
       classifiers=[
       	'Programming Language :: Python :: 3',
       	'Intended Audience :: Science/Research',
