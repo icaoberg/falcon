@@ -1,3 +1,6 @@
+prepare:
+	@(python3 -m pip install build twine)
+
 build:
 	@(rm -rfv dist)
 	@(python3 -m build)
@@ -10,4 +13,4 @@ twine-check:
 	@(twine check dist/*)
 
 twine-test-upload:
-	@(twine upload -r testpypi dist/*)
+	@(twine upload --verbose -r testpypi dist/*)
