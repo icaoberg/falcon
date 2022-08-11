@@ -14,3 +14,6 @@ twine-check:
 
 twine-test-upload:
 	@(twine upload --verbose -r testpypi dist/*)
+
+twine-upload:
+	@(twine upload --verbose dist/*)
