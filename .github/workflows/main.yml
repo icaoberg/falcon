@@ -18,7 +18,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          pip install pytest pytest-md pytest-emoji tabulate
+          pip install pytest pytest-md pytest-emoji tabulate urllib3
           pytest tests/*.py
       - uses: pavelzw/pytest-action@v2
         with:
