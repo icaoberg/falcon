@@ -1,7 +1,8 @@
 halcon
 ======
 
-![Big Data](https://img.shields.io/badge/big%20data-true-blue.svg)
+[![Build Status](https://travis-ci.org/icaoberg/falcon.svg?branch=dev)](https://travis-ci.org/icaoberg/falcon)
+[![Build Status](https://travis-ci.org/icaoberg/falcon.svg?branch=master)](https://travis-ci.org/icaoberg/falcon)
 [![GitHub issues](https://img.shields.io/github/issues/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/issues)
 [![GitHub forks](https://img.shields.io/github/forks/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/network)
 [![GitHub stars](https://img.shields.io/github/stars/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/stargazers)
@@ -15,11 +16,6 @@ halcon is a python implementation of the Feedback Adaptive Loop for Content-Base
 
 FALCON is, as described in the article abstract, "a novel method that is designed to handle disjunctive queries within metric spaces. The user provides weights for positive examples; our system 'learns' the implied concept and returns similar objects."
 
-### Development branch status
-[![Build Status](https://travis-ci.org/icaoberg/falcon.svg?branch=dev)](https://travis-ci.org/icaoberg/falcon)
-
-### Master branch status
-[![Build Status](https://travis-ci.org/icaoberg/falcon.svg?branch=master)](https://travis-ci.org/icaoberg/falcon)
 
 Pre-Requisites
 --------------
@@ -30,20 +26,11 @@ Pre-Requisites
 Installation
 ============
 
-There are several ways to install halcon. The most common way is to download the source code, unzip/untar the source code package and run the command
-
-```
-python3 setup.py install
-```
-
-I have plans of submitting this package to the Python Package Index.
-If I do so, then should be able to install it by running the command
+To install `halcon` run
 
 ```
 pip3 install --user halcon
 ```
-
-**COMMENT**: halcon depends on [numpy](http://www.numpy.org) and [scipy](http://www.scipy.org). Installing these packages in Windows and MacOSX is not a trivial task. For more information refer to the documentation.
 
 Usage
 -----
@@ -78,11 +65,15 @@ Here is a brief description of each of the input arguments
   good_set.append([identifier, initial_score, feature_vector])
   ```
 
-  For more information about the definition of the initial score, please refer to the article. In all my examples I use a initial score of 1, that is, all images have the same weight. The identifier should be unique (though not enforced), so you can tell images apart. This package assumes every object is represented by a [feature](http://en.wikipedia.org/wiki/Feature_(machine_learning)) vector. Feature calculation goes beyond the scope of this package. There are many feature calculation/machine learning packages out there that you might find useful, like [OpenCV](http://opencv.org/), [mahotas](https://pypi.python.org/pypi/mahotas) and [SLIC](http://lanec1web1.compbio.cs.cmu.edu/release/).
+  For more information about the definition of the initial score, please refer to the article. In all my examples I use a initial score of 1, that is, all images have the same weight. The identifier should be unique (though not enforced), so you can tell images apart. This package assumes every object is represented by a [feature](http://en.wikipedia.org/wiki/Feature_(machine_learning)) vector. Feature calculation and feature selection is beyond the scope of this package. There are many feature calculation/machine learning packages out there that you might find useful, like 
+  
+    * [OpenCV](http://opencv.org/)
+    * [mahotas](https://pypi.python.org/pypi/mahotas)
+    * [SLIC](http://lanec1web1.compbio.cs.cmu.edu/release/).
 
 * ```alpha```. For more information about alpha, please refer to the article. The recommended value by the paper is -5, which is the default value used in this package.
 
-* ```metric```. In the research article, a measure of distance ```d``` is used to calculate the distance between two feature vectors. The default value is ```euclidean``` (Euclidean distance) and other supported metrics are ```cityblock``` (Manhattan distance) and ```hamming``` (Hamming distance).
+* ```metric```. In the research article, a measure of distance ```d``` is used to calculate the distance between two feature vectors. The default value is ```euclidean``` (Euclidean distance) and other supported metrics are 1) ```cityblock``` (Manhattan distance) and 2) ```hamming``` (Hamming distance).
 
 * ```normalization```. Feature normalization option. Default is ```zscore```. Alternative option is ```standard```.
 
