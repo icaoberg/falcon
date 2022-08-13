@@ -44,7 +44,7 @@ def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zsc
         workspace['candidates'] = candidates
         workspace['good_set'] = good_set
 
-    [candidates, good_set] = feature_normalization(candidates, good_set,
+    [candidates, good_set] = _feature_normalization(candidates, good_set,
         normalization, debug=debug)
 
     if debug:
@@ -60,7 +60,7 @@ def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zsc
         if debug:
             logging.debug("Analyzing candidate: " + candidate[0])
 
-        candidate_distance = big_distance(alpha, candidate,
+        candidate_distance = _big_distance(alpha, candidate,
             good_set, metric=metric, debug=debug)
         if debug:
             logging.debug("Candidate distance: " + str(candidate_distance))
@@ -71,9 +71,6 @@ def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zsc
     tups = zip(iids, ratings) # zip them as tuples
 
     result = sorted(tups, key=itemgetter(1))
-    # note that this is sorting the tuples by the second element of the tuple
-    # if you want to sort by the first element,
-    #then you should use itemgetter(0)
 
     sorted_iids = []
     sorted_scores = []
@@ -83,7 +80,7 @@ def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zsc
 
     return [sorted_iids, sorted_scores]
 
-def big_distance(alpha, candidate, good_set, weighted=True,
+def _big_distance(alpha, candidate, good_set, weighted=True,
         metric='euclidean', debug=True):
     '''
     Calculates the distance between a candidate and every member of the good set
@@ -118,7 +115,7 @@ def big_distance(alpha, candidate, good_set, weighted=True,
                 weight = mpf('1')
 
             weights = weights+weight
-            score = distance(candidate[2],
+            score = _distance(candidate[2],
                 good_set[index][2], alpha=alpha, metric=metric )
 
             if alpha < 0 and score == 0:
@@ -138,7 +135,7 @@ def big_distance(alpha, candidate, good_set, weighted=True,
     return total_distance
 
 
-def distance(vector1, vector2, alpha=2, metric='euclidean'):
+def _distance(vector1, vector2, alpha=2, metric='euclidean'):
     '''
     Helper function that calculates the alpha
 
@@ -174,7 +171,7 @@ def distance(vector1, vector2, alpha=2, metric='euclidean'):
 
     return vector_norm
 
-def feature_normalization(trainset, testset, normalization, debug=False):
+def _feature_normalization(trainset, testset, normalization, debug=False):
     '''
     Feature normalization.
 
