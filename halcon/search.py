@@ -1,4 +1,4 @@
-# Copyright (C) 2014-2022 Ivan E. Cao-Berg
+# Copyright (C) 2014-2024 Ivan E. Cao-Berg
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published
@@ -20,6 +20,7 @@ import scipy.spatial.distance as distances
 from mpmath import *
 from operator import itemgetter
 import logging
+import pandas as pd
 
 def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zscore', debug=False):
     '''
@@ -27,15 +28,15 @@ def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zsc
 
     :param alpha: alpha
     :type alpha: double
-    :param candidates: list of image ids from candidates
-    :type candidates: double
-    :param good_set: list of image ids from members of the good set
-    :type good_set: list of longs
+    :param candidates: DataFrame of image ids from candidates
+    :type candidates: DataFrame
+    :param good_set: DataFrame of image ids from members of the good set
+    :type good_set: DataFrame
     :param metric: a valid metric
     :type metric: string
     :param normalization: normalization parameter. default value is 'zscore'
     :type normalization: string
-    :rtype: list of ranked image
+    :rtype: DataFrame of ranked image
     '''
 
     #normalize the feature vectors
@@ -55,7 +56,7 @@ def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zsc
     iids = []
     candidate_distance = []
 
-    for candidate in candidates:
+    for _, candidate in candidates.iterrows():
         iids.append(candidate[0])
         if debug:
             logging.debug("Analyzing candidate: " + candidate[0])
@@ -68,20 +69,10 @@ def query(good_set, candidates, alpha=-5, metric='euclidean', normalization='zsc
         if candidate_distance != 'NaN':
             ratings.append(candidate_distance)
 
-    tups = zip(iids, ratings) # zip them as tuples
+    result = pd.DataFrame({'iids': iids, 'ratings': ratings})
+    result.sort_values(by='ratings', inplace=True)
 
-    result = sorted(tups, key=itemgetter(1))
-    # note that this is sorting the tuples by the second element of the tuple
-    # if you want to sort by the first element,
-    #then you should use itemgetter(0)
-
-    sorted_iids = []
-    sorted_scores = []
-    for itm in result:
-        sorted_iids.append(itm[0])
-        sorted_scores.append(itm[1])
-
-    return [sorted_iids, sorted_scores]
+    return result
 
 def big_distance(alpha, candidate, good_set, weighted=True,
         metric='euclidean', debug=True):
@@ -91,9 +82,9 @@ def big_distance(alpha, candidate, good_set, weighted=True,
     :param alpha: alpha
     :type alpha: double
     :param candidate: a feature vector
-    :type candidates: list
-    :param good_set: a list of feature vectors
-    :type good_set: array
+    :type candidates: Series
+    :param good_set: a DataFrame of feature vectors
+    :type good_set: DataFrame
     :param weight: weight
     :type weight: double
     :rtype: total_distance
@@ -111,159 +102,18 @@ def big_distance(alpha, candidate, good_set, weighted=True,
         #pairwise distance
         weights = mpf('0')
 
-        for index in range(counts):
+        for _, good in good_set.iterrows():
             if weighted:
-                weight = mpf(good_set[index][1])
+                weight = mpf(good[1])
             else:
                 weight = mpf('1')
 
             weights = weights+weight
             score = distance(candidate[2],
-                good_set[index][2], alpha=alpha, metric=metric )
+                good[2], alpha=alpha, metric=metric )
 
             if alpha < 0 and score == 0:
                 total_distance = 0
                 return total_distance
 
-            score = mpf(weight)*numpy.power(mpf(score), mpf(alpha))
-            total = total + score
-
-        total_distance = mpf(total)/mpf(weights)
-        total_distance = total_distance**mpf(1.0/1.0*alpha)
-    except:
-        if debug:
-            logging.debug('Unable to calculate big distance')
-        total_distance = 'NaN'
-
-    return total_distance
-
-
-def distance(vector1, vector2, alpha=2, metric='euclidean'):
-    '''
-    Helper function that calculates the alpha
-
-    :param vector1: a vector
-    :type vector1: list of doubles
-    :param vector2: a vector
-    :type vector2: list of doubles
-    :param metric: euclidean, mahalanobis, seuclidean, cityblock
-    :type metric: string
-    :rtype: norm between vectors A and B
-    '''
-
-    mp.dps = 50
-    alpha = mpf(1.0*alpha)
-    vector1 = matrix(numpy.array(vector1))
-    vector2 = matrix(numpy.array(vector2))
-
-    if metric == 'euclidean':
-        vector_norm = distances.euclidean(vector1, vector2)
-    elif metric == 'mahalanobis':
-        vi = numpy.linalg.inv( numpy.cov(
-            numpy.concatenate((vector1, vector2)).T))
-        vector_norm = distances.mahalanobis( vector1, vector2, vi )
-    elif metric == 'seuclidean':
-        vector_norm = distances.seuclidean( vector1, vector2 )
-    elif metric == 'cityblock':
-        vector_norm = distances.cityblock( vector1, vector2 )
-    elif metric == 'hamming':
-        vector_norm = distances.hamming( vector1, vector2 )
-    else:
-        logging.warning("Unknown metric.")
-        return None
-
-    return vector_norm
-
-def feature_normalization(trainset, testset, normalization, debug=False):
-    '''
-    Feature normalization.
-
-    :param trainset: training set
-    :type trainset: list of feature vectors
-    :param testset: test set
-    :type testset: list of feature vectors
-    :param normalization: zscore or standard
-    :rtype: string
-    :rtype: normalized train and test sets
-    '''
-
-    if normalization == 'standard':
-        trainset_id = []
-        trainset_wt = []
-        trainset_feat = []
-
-        for itm in trainset:
-            trainset_id.append(itm[0])
-            trainset_wt.append(itm[1])
-            trainset_feat.append(itm[2])
-
-        trainset_feat = numpy.array(trainset_feat)
-        min_col = trainset_feat.min(axis=0) + 1e-10
-        max_col = trainset_feat.max(axis=0) + 1e-10
-
-        trainset_normfeat = (trainset_feat-min_col)/numpy.float64(max_col)
-
-        testset_id = []
-        testset_wt = []
-        testset_feat = []
-
-        for itm in testset:
-            testset_id.append(itm[0])
-            testset_wt.append(itm[1])
-            testset_feat.append(itm[2])
-
-        testset_feat = numpy.array(testset_feat)
-        testset_normfeat = (testset_feat-min_col)/numpy.float64(max_col)
-
-        new_trainset = []
-        for i in range(len(trainset)):
-            new_trainset.append([trainset_id[i], trainset_wt[i],
-                trainset_normfeat[i]])
-
-        new_testset = []
-        for i in range(len(testset)):
-            new_testset.append([testset_id[i], testset_wt[i],
-                testset_normfeat[i]])
-
-        return new_trainset, new_testset
-
-    else:
-        trainset_id = []
-        trainset_wt = []
-        trainset_feat = []
-
-        for itm in trainset:
-            trainset_id.append(itm[0])
-            trainset_wt.append(itm[1])
-            trainset_feat.append(itm[2])
-
-        trainset_feat = numpy.array(trainset_feat)
-
-        mean_col = trainset_feat.mean(axis=0)
-        std_col = trainset_feat.std(axis=0) + 1e-10
-
-        trainset_normfeat = (trainset_feat - mean_col)/numpy.float64(std_col)
-
-        testset_id = []
-        testset_wt = []
-        testset_feat = []
-
-        for itm in testset:
-            testset_id.append(itm[0])
-            testset_wt.append(itm[1])
-            testset_feat.append(itm[2])
-
-        testset_feat = numpy.array(testset_feat)
-        testset_normfeat = (testset_feat-mean_col)/numpy.float64(std_col)
-
-        new_trainset = []
-        for i in range(len(trainset)):
-            new_trainset.append([trainset_id[i], trainset_wt[i],
-                trainset_normfeat[i]])
-
-        new_testset = []
-        for i in range(len(testset)):
-            new_testset.append([testset_id[i], testset_wt[i],
-                testset_normfeat[i]])
-
-        return new_trainset, new_testset
+            score = m
