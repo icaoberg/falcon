@@ -20,7 +20,7 @@ setup(
         'scipy==1.12.0',
         'setuptools==68.2.2',
         'tabulate==0.9.0',
-        'urllib3==1.26.18'
+        'urllib3==1.26.19'
     ],
     project_urls={
         'Bug Tracker': 'https://github.com/icaoberg/falcon',
