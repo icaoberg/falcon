@@ -170,4 +170,4 @@ For any other inquiries visit those links as well.
 
 ---
 
-Copyright © 2014–2026 Ivan Cao-Berg, Carnegie Mellon University. All rights reserved.
+Copyright © 2014–2026 icaoberg at Carnegie Mellon University. All rights reserved.
