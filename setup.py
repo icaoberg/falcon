@@ -18,9 +18,9 @@ setup(
         'mpmath==1.3.0',
         'numpy==1.26.3',
         'scipy==1.12.0',
-        'setuptools==68.2.2',
+        'setuptools==78.1.1',
         'tabulate==0.9.0',
-        'urllib3==1.26.18'
+        'urllib3==2.6.3'
     ],
     project_urls={
         'Bug Tracker': 'https://github.com/icaoberg/falcon',
