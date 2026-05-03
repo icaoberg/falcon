@@ -98,7 +98,7 @@ Elapsed time: 0.0221660137177 seconds
         3            29  Iris-setosa      2.40121e-40
         4            40  Iris-setosa      5.83391e-40
         5             8  Iris-setosa      7.04398e-39
-        6            18  Iris-setosa      1.1259e-35
+        6            18  Iris-setosa      1.2259e-35
         7            41  Iris-setosa      1.51906e-34
         8            50  Iris-versicolor  6.99696e-34
         9            37  Iris-setosa      1.09221e-32
