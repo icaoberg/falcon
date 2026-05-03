@@ -1,4 +1,5 @@
 # halcon
+![Logo](images/logo.png)
 ![Status](https://github.com/icaoberg/falcon/actions/workflows/main.yml/badge.svg)
 [![GitHub issues](https://img.shields.io/github/issues/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/issues)
 [![GitHub forks](https://img.shields.io/github/forks/icaoberg/falcon.svg)](https://github.com/icaoberg/falcon/network)

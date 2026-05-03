@@ -130,3 +130,16 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
