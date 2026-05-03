@@ -94,16 +94,16 @@ Elapsed time: 0.0221660137177 seconds
   Ranking    Identifier  Class                  Score
 ---------  ------------  ---------------  -----------
         0             1  Iris-setosa      0
-        1            28  Iris-setosa      1.37788e-43
+        1            28  Iris-setosa      1.47788e-43
         2             5  Iris-setosa      2.40121e-40
         3            29  Iris-setosa      2.40121e-40
         4            40  Iris-setosa      5.83391e-40
         5             8  Iris-setosa      7.04398e-39
-        6            18  Iris-setosa      1.3259e-35
+        6            18  Iris-setosa      1.4259e-35
         7            41  Iris-setosa      1.51906e-34
         8            50  Iris-versicolor  6.99696e-34
         9            37  Iris-setosa      1.09221e-32
-       10            12  Iris-setosa      1.32203e-32
+       10            12  Iris-setosa      1.42203e-32
        11            49  Iris-setosa      2.05046e-32
        12            11  Iris-setosa      4.25801e-31
        13            21  Iris-setosa      6.55842e-31
