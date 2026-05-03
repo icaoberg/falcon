@@ -1,0 +1,87 @@
+name: Version Bump and Release
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  bump-and-release:
+    name: Bump version and create release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Bump version
+        id: bump
+        run: |
+          python - <<'EOF'
+          import re
+
+          # Read current version from setup.py
+          with open("setup.py", "r") as f:
+              content = f.read()
+
+          match = re.search(r"__version__\s*=\s*'([^']+)'", content)
+          if not match:
+              raise RuntimeError("Could not find __version__ in setup.py")
+
+          old_version = match.group(1)
+          major, minor = old_version.split(".")
+          new_version = f"{major}.{int(minor) + 1}"
+
+          # Update setup.py
+          new_content = content.replace(
+              f"__version__ = '{old_version}'",
+              f"__version__ = '{new_version}'"
+          )
+          with open("setup.py", "w") as f:
+              f.write(new_content)
+
+          # Update README.md if version string appears there
+          with open("README.md", "r") as f:
+              readme = f.read()
+
+          if old_version in readme:
+              readme = readme.replace(old_version, new_version)
+              with open("README.md", "w") as f:
+                  f.write(readme)
+
+          print(f"Bumped {old_version} -> {new_version}")
+
+          with open("new_version.txt", "w") as f:
+              f.write(new_version)
+          EOF
+
+      - name: Read new version
+        id: version
+        run: echo "version=$(cat new_version.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add setup.py README.md
+          git commit -m "chore: bump version to ${{ steps.version.outputs.version }}"
+          git push
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
+          body: |
+            Automated release for version ${{ steps.version.outputs.version }}.
+          generate_release_notes: true

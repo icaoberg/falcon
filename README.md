@@ -151,6 +151,10 @@ Elapsed time: 0.0280928611755 seconds
        19  wine56        0.291853
 ```
 
+## Deprecation Notice
+
+This project is deprecated and no longer actively maintained. It will more than likely be updated in the future to be compatible with the latest version of Python.
+
 ## Bugs and Questions
 To submit bugs about the source code visit
 
@@ -161,3 +165,7 @@ To submit bugs about the documentation visit
 * https://github.com/icaoberg/falcon-docs
 
 For any other inquiries visit those links as well.
+
+---
+
+Copyright © 2014–2026 Ivan Cao-Berg, Carnegie Mellon University. All rights reserved.
